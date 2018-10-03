@@ -5,9 +5,10 @@
   "main": "CoffeeMaker.js",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^5.6.1",
-    "jasmine": "^3.2.0",
-    "jasmine-es6": "^0.4.3"
+    "eslint": "5.6.x",
+    "jasmine": "3.2.x",
+    "jasmine-es6": "0.4.x",
+    "nyc": "13.0.x"
   },
   "scripts": {
     "test": "./node_modules/jasmine-es6/bin/jasmine.js"
