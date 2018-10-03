@@ -11,7 +11,8 @@
     "nyc": "13.0.x"
   },
   "scripts": {
-    "test": "./node_modules/jasmine-es6/bin/jasmine.js"
+    "test": "./node_modules/jasmine-es6/bin/jasmine.js",
+    "tcr": "./test-commit-revert.sh"
   },
   "author": "Maciej Żok",
   "license": "MIT"
