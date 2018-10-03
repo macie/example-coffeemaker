@@ -3,8 +3,7 @@ env:
     - CC_TEST_REPORTER_ID=ff1f3b93d85a8d4c5eeac69794d78a9579373e21abb099a91710497dee1ce351
 language: node_js
 node_js:
-  - "iojs"
-  - "7"
+  - "node"
 cache:
   directories:
     - ~/.npm
