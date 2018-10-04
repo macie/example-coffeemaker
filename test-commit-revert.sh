@@ -25,4 +25,4 @@ fi
 
 git add --all
 
-npm test && git commit -am "${commit_msg}" || (echo "ERROR: Tests failed -> revert all changes"; git reset --hard)
+npm test && git commit --all --message="${commit_msg}" || (echo "ERROR: Tests failed -> revert all changes"; git reset --hard)
