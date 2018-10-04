@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # test && commit || revert
-#   Commit changes only if all tests pass. Otherwise revert code
+#   Commit all changes only if all tests pass. Otherwise revert code
 #   to starting point.
 #   Tool for npm and git.
 #
@@ -22,5 +22,7 @@ if [ ! ${has_commit_msg} ]; then
   echo "ERROR: No commit message"
   exit 64  # command line usage error (via /usr/include/sysexits.h)
 fi
+
+git add --all
 
 npm test && git commit -am "${commit_msg}" || (echo "ERROR: Tests failed -> revert all changes"; git reset --hard)
