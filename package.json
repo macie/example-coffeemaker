@@ -12,7 +12,7 @@
     "nyc": "13.0.x"
   },
   "scripts": {
-    "test": "./node_modules/jasmine-es6/bin/jasmine.js",
+    "test": "./node_modules/jasmine-es6/bin/jasmine.js JASMINE_CONFIG_PATH=tests/config/jasmine.json",
     "tcr": "./test-commit-revert.sh"
   },
   "author": "Maciej Żok",
