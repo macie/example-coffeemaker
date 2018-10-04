@@ -23,4 +23,4 @@ if [ ! ${has_commit_msg} ]; then
   exit 64  # command line usage error (via /usr/include/sysexits.h)
 fi
 
-npm test && git commit -am ${commit_msg} || (echo "ERROR: Tests failed -> revert all changes"; git reset --hard)
+npm test && git commit -am "${commit_msg}" || (echo "ERROR: Tests failed -> revert all changes"; git reset --hard)
