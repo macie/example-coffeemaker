@@ -2,6 +2,9 @@ import LowLevelAPI from './LowLevelAPI';
 
 /*
     A water boiler model.
+
+    Attributes:
+        api: An interface of coffee machine low-level API.
 */
 function Boiler() {
     this.api = new LowLevelAPI();
@@ -38,6 +41,9 @@ Boiler.prototype.turnOn = function() {
 /*
     Turn off water boiler.
     
+    Boiler in idle mode should have turned off heater and
+    opened relief valve.
+
     Returns:
         Itself.
 */
