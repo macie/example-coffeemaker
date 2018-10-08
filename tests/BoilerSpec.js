@@ -4,7 +4,11 @@ describe('Boiler', function() {
     let boiler;
 
     beforeEach(function() {
-        let lowLevelAPIFake = {GetBoilerStatus: () => 'NOT_EMPTY'};
+        let lowLevelAPIFake = {
+            GetBoilerStatus: () => 'NOT_EMPTY',
+            SetBoilerState: () => {},
+            SetReliefValveState: () => {}
+        };
         boiler = new Boiler();
         boiler.api = lowLevelAPIFake;
     });
@@ -22,9 +26,13 @@ describe('Boiler', function() {
     });
 
     it('should be able to turn off', function() {
-        let result = boiler.turnOff();
+        spyOn(boiler.api, 'SetBoilerState');
+        spyOn(boiler.api, 'SetReliefValveState');
 
-        expect(result).toEqual(boiler);
+        boiler.turnOff();
+
+        expect(boiler.api.SetBoilerState).toHaveBeenCalledWith('OFF');
+        expect(boiler.api.SetReliefValveState).toHaveBeenCalledWith('OPEN');
     });
 
     describe('should indicate if', function() {

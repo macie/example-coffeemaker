@@ -34,6 +34,9 @@ Boiler.prototype.turnOn = function() {
         Itself.
 */
 Boiler.prototype.turnOff = function() {
+    this.api.SetBoilerState('OFF');
+    this.api.SetReliefValveState('OPEN');
+
     return this;
 };
 
