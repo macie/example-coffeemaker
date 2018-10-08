@@ -5,9 +5,11 @@ import LowLevelAPI from './LowLevelAPI';
 
     Attributes:
         api: An interface of coffee machine low-level API.
+        overheatingCheckLoop: An ID of currently running check loop.
 */
 function Boiler() {
     this.api = new LowLevelAPI();
+    this.overheatingCheckLoop;
 }
 
 /*
@@ -32,8 +34,16 @@ Boiler.prototype.initialize = function() {
         Itself.
 */
 Boiler.prototype.turnOn = function() {
+    const REFRESH_RATE = 1000;  // in ms
+
     this.api.SetBoilerState('ON');
     this.api.SetReliefValveState('CLOSED');
+
+    this.overheatingCheckLoop = setInterval(() => {
+        if (this.isEmpty()) {
+            this.turnOff();
+        }
+    }, REFRESH_RATE);
 
     return this;
 };
@@ -48,6 +58,9 @@ Boiler.prototype.turnOn = function() {
         Itself.
 */
 Boiler.prototype.turnOff = function() {
+    clearInterval(this.overheatingCheckLoop);
+    this.overheatingCheckLoop = null;
+
     this.api.SetBoilerState('OFF');
     this.api.SetReliefValveState('OPEN');
 
