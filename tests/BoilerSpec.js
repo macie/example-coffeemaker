@@ -27,9 +27,21 @@ describe('Boiler', function() {
         expect(result).toEqual(boiler);
     });
 
-    it('should indicate if is empty', function() {
-        let result = boiler.isEmpty();
+    describe('should indicate if', function() {
+        it('is empty', function() {
+            boiler.api.GetBoilerStatus = () => 'EMPTY';
 
-        expect(result).toBeFalsy();
+            let result = boiler.isEmpty();
+
+            expect(result).toBeTruthy();
+        });
+
+        it('is not empty', function() {
+            boiler.api.GetBoilerStatus = () => 'NOT_EMPTY';
+
+            let result = boiler.isEmpty();
+
+            expect(result).toBeFalsy();
+        });
     });
 });
