@@ -14,9 +14,11 @@ describe('Boiler', function() {
     });
 
     it('should be able to reset itself', function() {
-        let result = boiler.initialize();
+        spyOn(boiler, 'turnOff');
 
-        expect(result).toEqual(boiler);
+        boiler.initialize();
+
+        expect(boiler.turnOff).toHaveBeenCalled();
     });
 
     it('should be able to turn on', function() {

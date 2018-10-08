@@ -14,6 +14,8 @@ function Boiler() {
         Itself.
 */
 Boiler.prototype.initialize = function() {
+    this.turnOff();
+
     return this;
 };
 
