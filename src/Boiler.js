@@ -19,11 +19,17 @@ Boiler.prototype.initialize = function() {
 
 /*
     Turn on water boiler.
+
+    Boiler in operational mode should have turned on heater and
+    closed relief valve.
     
     Returns:
         Itself.
 */
 Boiler.prototype.turnOn = function() {
+    this.api.SetBoilerState('ON');
+    this.api.SetReliefValveState('CLOSED');
+
     return this;
 };
 

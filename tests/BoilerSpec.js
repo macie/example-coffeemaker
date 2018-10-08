@@ -20,9 +20,13 @@ describe('Boiler', function() {
     });
 
     it('should be able to turn on', function() {
-        let result = boiler.turnOn();
+        spyOn(boiler.api, 'SetBoilerState');
+        spyOn(boiler.api, 'SetReliefValveState');
 
-        expect(result).toEqual(boiler);
+        boiler.turnOn();
+
+        expect(boiler.api.SetBoilerState).toHaveBeenCalledWith('ON');
+        expect(boiler.api.SetReliefValveState).toHaveBeenCalledWith('CLOSED');
     });
 
     it('should be able to turn off', function() {
