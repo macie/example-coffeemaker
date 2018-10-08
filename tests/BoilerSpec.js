@@ -4,7 +4,9 @@ describe('Boiler', function() {
     let boiler;
 
     beforeEach(function() {
+        let lowLevelAPIFake = {GetBoilerStatus: () => 'NOT_EMPTY'};
         boiler = new Boiler();
+        boiler.api = lowLevelAPIFake;
     });
 
     it('should be able to reset itself', function() {

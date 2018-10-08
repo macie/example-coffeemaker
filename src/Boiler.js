@@ -1,7 +1,11 @@
+import LowLevelAPI from './LowLevelAPI';
+
 /*
     A water boiler model.
 */
-function Boiler() {}
+function Boiler() {
+    this.api = new LowLevelAPI();
+}
 
 /*
     Reset water boiler model.
@@ -40,7 +44,7 @@ Boiler.prototype.turnOff = function() {
         True if water boiler is empty; false - otherwise.
 */
 Boiler.prototype.isEmpty = function() {
-    return false;
+    return this.api.GetBoilerStatus() === 'EMPTY';
 };
 
 export default Boiler;
