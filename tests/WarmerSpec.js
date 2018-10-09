@@ -5,6 +5,7 @@ describe('Warmer', function() {
 
     beforeEach(function() {
         let lowLevelAPIFake = {
+            GetWarmerPlateStatus: () => {},
             SetWarmerState: () => {}
         };
         warmer = new Warmer();
@@ -29,5 +30,23 @@ describe('Warmer', function() {
         warmer.turnOff();
 
         expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('OFF');
+    });
+
+    describe('should indicate if pot warmer', function() {
+        it('is empty', function() {
+            warmer.api.GetWarmerPlateStatus = () => {return 'WARMER_EMPTY';};
+
+            let result = warmer.isEmpty();
+
+            expect(result).toBeTruthy();
+        });
+
+        it('is not empty', function() {
+            warmer.api.GetWarmerPlateStatus = () => {return 'POT_EMPTY';};
+
+            let result = warmer.isEmpty();
+
+            expect(result).toBeFalsy();
+        });
     });
 });
