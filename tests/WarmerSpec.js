@@ -49,4 +49,22 @@ describe('Warmer', function() {
             expect(result).toBeFalsy();
         });
     });
+
+    describe('should indicate if pot warmer', function() {
+        it('has filled pot', function() {
+            warmer.api.GetWarmerPlateStatus = () => {return 'POT_NOT_EMPTY';};
+
+            let result = warmer.hasEmptyPot();
+
+            expect(result).toBeFalsy();
+        });
+
+        it('has empty pot', function() {
+            warmer.api.GetWarmerPlateStatus = () => {return 'POT_EMPTY';};
+
+            let result = warmer.hasEmptyPot();
+
+            expect(result).toBeTruthy();
+        });
+    });
 });

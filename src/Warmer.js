@@ -51,4 +51,14 @@ Warmer.prototype.isEmpty = function() {
     return this.api.GetWarmerPlateStatus() == 'WARMER_EMPTY';
 };
 
+/*
+    Indicate if pot warmer has empty pot.
+
+    Returns:
+        True if pot warmer has empty pot; false - otherwise.
+*/
+Warmer.prototype.hasEmptyPot = function() {
+    return this.api.GetWarmerPlateStatus() == 'POT_EMPTY';
+};
+
 export default Warmer;
