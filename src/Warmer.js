@@ -1,7 +1,11 @@
+import LowLevelAPI from './LowLevelAPI';
+
 /*
     A pot warmer model.
 */
-function Warmer() {}
+function Warmer() {
+    this.api = new LowLevelAPI();
+}
 
 /*
     Reset pot warmer model.
@@ -26,10 +30,14 @@ Warmer.prototype.turnOn = function() {
 /*
     Turn off pot warmer.
 
+    Pot warmer in idle mode should have turned off heater.
+
     Returns:
         Itself.
 */
 Warmer.prototype.turnOff = function() {
+    this.api.SetWarmerState('OFF');
+
     return this;
 };
 

@@ -4,7 +4,11 @@ describe('Warmer', function() {
     let warmer;
 
     beforeEach(function() {
+        let lowLevelAPIFake = {
+            SetWarmerState: () => {}
+        };
         warmer = new Warmer();
+        warmer.api = lowLevelAPIFake;
     });
 
     it('should be able to reset itself', function() {
@@ -20,8 +24,10 @@ describe('Warmer', function() {
     });
 
     it('should be able to turn off', function() {
-        let result = warmer.turnOff();
+        spyOn(warmer.api, 'SetWarmerState');
 
-        expect(result).toEqual(warmer);
+        warmer.turnOff();
+
+        expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('OFF');
     });
 });
