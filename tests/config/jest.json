@@ -1,0 +1,6 @@
+{
+  "collectCoverage": true,
+  "coverageReporters": ["lcov"],
+  "rootDir": "./../../",
+  "testRegex": "(\/tests\/.*|(\\.|/)(test|spec))\\.jsx?$"
+}
