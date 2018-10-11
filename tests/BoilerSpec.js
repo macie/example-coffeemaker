@@ -1,3 +1,4 @@
+jest.mock('../src/LowLevelAPI.js');
 import Boiler from '../src/Boiler';
 
 jest.useFakeTimers();
@@ -6,17 +7,11 @@ describe('Boiler', function() {
     let boiler;
 
     beforeEach(function() {
-        let lowLevelAPIFake = {
-            GetBoilerStatus: () => 'NOT_EMPTY',
-            SetBoilerState: () => {},
-            SetReliefValveState: () => {}
-        };
         boiler = new Boiler();
-        boiler.api = lowLevelAPIFake;
     });
 
     it('should be able to reset itself', function() {
-        spyOn(boiler, 'turnOff');
+        boiler.turnOff = jest.fn();
 
         boiler.initialize();
 
@@ -24,9 +19,6 @@ describe('Boiler', function() {
     });
 
     it('should be able to turn on', function() {
-        spyOn(boiler.api, 'SetBoilerState');
-        spyOn(boiler.api, 'SetReliefValveState');
-
         boiler.turnOn();
 
         expect(boiler.api.SetBoilerState).toHaveBeenCalledWith('ON');
@@ -49,9 +41,6 @@ describe('Boiler', function() {
     });
 
     it('should be able to turn off', function() {
-        spyOn(boiler.api, 'SetBoilerState');
-        spyOn(boiler.api, 'SetReliefValveState');
-
         boiler.turnOff();
 
         expect(boiler.api.SetBoilerState).toHaveBeenCalledWith('OFF');
@@ -60,7 +49,7 @@ describe('Boiler', function() {
 
     describe('should indicate if', function() {
         it('is empty', function() {
-            boiler.api.GetBoilerStatus = () => 'EMPTY';
+            boiler.api.GetBoilerStatus.mockReturnValue('EMPTY');
 
             let result = boiler.isEmpty();
 
@@ -68,7 +57,7 @@ describe('Boiler', function() {
         });
 
         it('is not empty', function() {
-            boiler.api.GetBoilerStatus = () => 'NOT_EMPTY';
+            boiler.api.GetBoilerStatus.mockReturnValue('NOT_EMPTY');
 
             let result = boiler.isEmpty();
 
