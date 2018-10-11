@@ -1,5 +1,7 @@
 import Boiler from '../src/Boiler';
 
+jest.useFakeTimers();
+
 describe('Boiler', function() {
     let boiler;
 
@@ -29,6 +31,21 @@ describe('Boiler', function() {
 
         expect(boiler.api.SetBoilerState).toHaveBeenCalledWith('ON');
         expect(boiler.api.SetReliefValveState).toHaveBeenCalledWith('CLOSED');
+    });
+
+    it('should protect itself against overheating ', function() {
+        boiler.turnOff = jest.fn(boiler.turnOff);
+        boiler.isEmpty = jest.fn()
+            .mockReturnValueOnce(false)
+            .mockReturnValueOnce(false)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false);
+
+        boiler.turnOn();
+        jest.advanceTimersByTime(10000);
+
+        expect(boiler.isEmpty).toHaveBeenCalledTimes(3);
+        expect(boiler.turnOff).toHaveBeenCalledTimes(1);
     });
 
     it('should be able to turn off', function() {
