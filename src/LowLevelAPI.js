@@ -32,11 +32,7 @@ function LowLevelAPI() {
 */
 LowLevelAPI.prototype.GetWarmerPlateStatus = function() {
     const validStatuses = ['WARMER_EMPTY', 'POT_EMPTY', 'POT_NOT_EMPTY'];
-    let randomStatus = validStatuses[
-        Math.floor(Math.random() * validStatuses.length)
-    ];
-
-    return randomStatus;
+    return fakeSensorReading(validStatuses);
 };
 
 /*
@@ -49,11 +45,7 @@ LowLevelAPI.prototype.GetWarmerPlateStatus = function() {
 */
 LowLevelAPI.prototype.GetBoilerStatus = function() {
     const validStatuses = ['EMPTY', 'NOT_EMPTY'];
-    let randomStatus = validStatuses[
-        Math.floor(Math.random() * validStatuses.length)
-    ];
-
-    return randomStatus;
+    return fakeSensorReading(validStatuses);
 };
 
 /*
@@ -72,11 +64,7 @@ LowLevelAPI.prototype.GetBoilerStatus = function() {
 */
 LowLevelAPI.prototype.GetBrewButtonStatus = function() {
     const validStatuses = ['PUSHED', 'NOT_PUSHED'];
-    let randomStatus = validStatuses[
-        Math.floor(Math.random() * validStatuses.length)
-    ];
-
-    return randomStatus;
+    return fakeSensorReading(validStatuses);
 };
 
 /*
@@ -160,5 +148,18 @@ LowLevelAPI.prototype.SetReliefValveState = function(state) {
 
     return this;
 };
+
+/*
+    Simulate sensor reading (from given possible readings).
+
+    Args:
+        possibleStatuses: An array with possible sensor readings.
+
+    Return:
+        A possible reading.
+*/
+function fakeSensorReading(possibleReadings) {
+    return possibleReadings[Math.floor(Math.random() * possibleReadings.length)];
+}
 
 export default LowLevelAPI;
