@@ -7,6 +7,22 @@ describe('LowLevelAPI', function() {
         lowLevelAPI = new LowLevelAPI();
     });
 
+    describe('for indicator', function() {
+        it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
+            lowLevelAPI.SetIndicatorState(validState);
+
+            expect(lowLevelAPI.indicatorState).toEqual(validState);
+        });
+
+        it('should preserve current state when given invalid state', function() {
+            let invalidState = 'FLASHING';
+
+            lowLevelAPI.SetIndicatorState(invalidState);
+
+            expect(lowLevelAPI.indicatorState).not.toEqual(invalidState);
+        });
+    });
+
     describe('for relief valve', function() {
         it.each(['OPEN', 'CLOSED'])('should be able to change state for valid state', function(validState) {
             lowLevelAPI.SetReliefValveState(validState);
@@ -22,5 +38,4 @@ describe('LowLevelAPI', function() {
             expect(lowLevelAPI.reliefValveState).not.toEqual(invalidState);
         });
     });
-
 });

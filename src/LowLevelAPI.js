@@ -6,10 +6,13 @@
         and practices in C. Upper Saddle River, NJ: Prentice Hall, 2007. Print.
 
     Attributes:
+        indicatorState: A string with current indicator state.
+            Default 'OFF'.
         reliefValveState: A string with current relief valve state.
             Default 'OPEN'.
 */
 function LowLevelAPI() {
+    this.indicatorState = 'OFF';
     this.reliefValveState = 'OPEN';
 }
 
@@ -72,9 +75,19 @@ LowLevelAPI.prototype.SetWarmerState = function(/* state */) {
     The indicator light should be turned on at the end
     of the brewing cycle. It should be turned off when
     the user presses the brew button."
+
+    Args:
+        state: A string with valid indicator state.
+
+    Returns:
+        Itself.
 */
-LowLevelAPI.prototype.SetIndicatorState = function(/* state */) {
-    // const validStates = ['ON', 'OFF'];
+LowLevelAPI.prototype.SetIndicatorState = function(state) {
+    const validStates = ['ON', 'OFF'];
+    if (validStates.includes(state)) {
+        this.indicatorState = state;
+    }
+
     return this;
 };
 
