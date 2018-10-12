@@ -37,6 +37,14 @@ describe('LowLevelAPI', function() {
 
             expect(lowLevelAPI.warmerState).not.toEqual(invalidState);
         });
+
+        it('should be able to respond with valid plate status', function() {
+            let validStatuses = ['WARMER_EMPTY', 'POT_EMPTY', 'POT_NOT_EMPTY'];
+
+            let result = lowLevelAPI.GetWarmerPlateStatus();
+
+            expect(validStatuses).toContain(result);
+        });
     });
 
     describe('for indicator', function() {

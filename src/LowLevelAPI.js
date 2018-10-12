@@ -26,10 +26,17 @@ function LowLevelAPI() {
     "This function returns the status of the warmer-plate
     sensor. This sensor detects the presence of the pot
     and whether it has coffee in it."
+
+    Returns:
+        A string with random valid boiler plate status.
 */
 LowLevelAPI.prototype.GetWarmerPlateStatus = function() {
-    // const status = ['WARMER_EMPTY', 'POT_EMPTY', 'POT_NOT_EMPTY'];
-    return this;
+    const validStatuses = ['WARMER_EMPTY', 'POT_EMPTY', 'POT_NOT_EMPTY'];
+    let randomStatus = validStatuses[
+        Math.floor(Math.random() * validStatuses.length)
+    ];
+
+    return randomStatus;
 };
 
 /*
