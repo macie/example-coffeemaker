@@ -5,6 +5,7 @@ import LowLevelAPI from './LowLevelAPI';
 */
 function Warmer() {
     this.api = new LowLevelAPI();
+    this.overheatingCheckLoop;
 }
 
 /*
@@ -24,7 +25,15 @@ Warmer.prototype.initialize = function() {
         Itself.
 */
 Warmer.prototype.turnOn = function() {
-    this.api.SetWarmerState('ON');
+    const REFRESH_RATE = 1000;  // in ms
+
+    this.overheatingCheckLoop = setInterval(() => {
+        if (this.isEmpty() || this.hasEmptyPot()) {
+            this.api.SetWarmerState('OFF');
+        } else {
+            this.api.SetWarmerState('ON');
+        }
+    }, REFRESH_RATE);
 
     return this;
 };
@@ -38,6 +47,9 @@ Warmer.prototype.turnOn = function() {
         Itself.
 */
 Warmer.prototype.turnOff = function() {
+    clearInterval(this.overheatingCheckLoop);
+    this.overheatingCheckLoop = null;
+
     this.api.SetWarmerState('OFF');
 
     return this;
