@@ -2,9 +2,16 @@
     Low-level coffee machine API.
 
     Based on Listing 20-1 from book:
-        Martin, Robert C., and Micah Martin. Agile principles, patterns, and practices in C. Upper Saddle River, NJ: Prentice Hall, 2007. Print.
+        Martin, Robert C., and Micah Martin. Agile principles, patterns,
+        and practices in C. Upper Saddle River, NJ: Prentice Hall, 2007. Print.
+
+    Attributes:
+        reliefValveState: A string with current relief valve state.
+            Default 'OPEN'.
 */
-function LowLevelAPI() {}
+function LowLevelAPI() {
+    this.reliefValveState = 'OPEN';
+}
 
 /*
     "This function returns the status of the warmer-plate
@@ -78,9 +85,19 @@ LowLevelAPI.prototype.SetIndicatorState = function(/* state */) {
     the coffee filter. When the valve is open, the steam
     in the boiler escapes into the environment, and the
     water in the boiler will not spray out over the filter."
+
+    Args:
+        state: A string with valid valve state.
+
+    Returns:
+        Itself.
 */
-LowLevelAPI.prototype.SetReliefValveState = function(/* state */) {
-    // const validStates = ['OPEN', 'CLOSED'];
+LowLevelAPI.prototype.SetReliefValveState = function(state) {
+    const validStates = ['OPEN', 'CLOSED'];
+    if (validStates.includes(state)) {
+        this.reliefValveState = state;
+    }
+
     return this;
 };
 
