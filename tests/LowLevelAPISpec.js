@@ -21,6 +21,14 @@ describe('LowLevelAPI', function() {
 
             expect(lowLevelAPI.boilerState).not.toEqual(invalidState);
         });
+
+        it('should be able to respond with valid status', function() {
+            let validStatuses = ['EMPTY', 'NOT_EMPTY'];
+
+            let result = lowLevelAPI.GetBoilerStatus();
+
+            expect(validStatuses).toContain(result);
+        });
     });
 
     describe('for warmer', function() {

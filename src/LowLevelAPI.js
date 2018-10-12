@@ -43,10 +43,17 @@ LowLevelAPI.prototype.GetWarmerPlateStatus = function() {
     "This function returns the status of the boiler switch.
     The boiler switch is a float switch that detects if
     there is more than 1/2 cup of water in the boiler."
+
+    Returns:
+        A string with random valid boiler status.
 */
 LowLevelAPI.prototype.GetBoilerStatus = function() {
-    // const status = ['EMPTY', 'NOT_EMPTY'];
-    return this;
+    const validStatuses = ['EMPTY', 'NOT_EMPTY'];
+    let randomStatus = validStatuses[
+        Math.floor(Math.random() * validStatuses.length)
+    ];
+
+    return randomStatus;
 };
 
 /*
