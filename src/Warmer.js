@@ -24,6 +24,8 @@ Warmer.prototype.initialize = function() {
         Itself.
 */
 Warmer.prototype.turnOn = function() {
+    this.api.SetWarmerState('ON');
+
     return this;
 };
 

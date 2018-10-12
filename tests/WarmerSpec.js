@@ -15,9 +15,9 @@ describe('Warmer', function() {
     });
 
     it('should be able to turn on', function() {
-        let result = warmer.turnOn();
+        warmer.turnOn();
 
-        expect(result).toEqual(warmer);
+        expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('ON');
     });
 
     it('should be able to turn off', function() {
