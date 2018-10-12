@@ -66,10 +66,17 @@ LowLevelAPI.prototype.GetBoilerStatus = function() {
     Thus, even if this function is polled at a very slow
     rate, it will still detect when the brew button is
     pushed."
+
+    Returns:
+        A string with random valid grew button status.
 */
 LowLevelAPI.prototype.GetBrewButtonStatus = function() {
-    // const status = ['PUSHED', 'NOT_PUSHED'];
-    return this;
+    const validStatuses = ['PUSHED', 'NOT_PUSHED'];
+    let randomStatus = validStatuses[
+        Math.floor(Math.random() * validStatuses.length)
+    ];
+
+    return randomStatus;
 };
 
 /*
