@@ -7,6 +7,22 @@ describe('LowLevelAPI', function() {
         lowLevelAPI = new LowLevelAPI();
     });
 
+    describe('for boiler', function() {
+        it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
+            lowLevelAPI.SetBoilerState(validState);
+
+            expect(lowLevelAPI.boilerState).toEqual(validState);
+        });
+
+        it('should preserve current state when given invalid state', function() {
+            let invalidState = 'STAND_BY';
+
+            lowLevelAPI.SetBoilerState(invalidState);
+
+            expect(lowLevelAPI.boilerState).not.toEqual(invalidState);
+        });
+    });
+
     describe('for warmer', function() {
         it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
             lowLevelAPI.SetWarmerState(validState);
