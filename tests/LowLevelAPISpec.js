@@ -7,6 +7,22 @@ describe('LowLevelAPI', function() {
         lowLevelAPI = new LowLevelAPI();
     });
 
+    describe('for warmer', function() {
+        it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
+            lowLevelAPI.SetWarmerState(validState);
+
+            expect(lowLevelAPI.warmerState).toEqual(validState);
+        });
+
+        it('should preserve current state when given invalid state', function() {
+            let invalidState = 'STAND_BY';
+
+            lowLevelAPI.SetWarmerState(invalidState);
+
+            expect(lowLevelAPI.warmerState).not.toEqual(invalidState);
+        });
+    });
+
     describe('for indicator', function() {
         it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
             lowLevelAPI.SetIndicatorState(validState);

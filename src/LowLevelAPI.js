@@ -6,12 +6,15 @@
         and practices in C. Upper Saddle River, NJ: Prentice Hall, 2007. Print.
 
     Attributes:
+        warmerState: A string with current warmer state.
+            Default 'OFF'.
         indicatorState: A string with current indicator state.
             Default 'OFF'.
         reliefValveState: A string with current relief valve state.
             Default 'OPEN'.
 */
 function LowLevelAPI() {
+    this.warmerState = 'OFF';
     this.indicatorState = 'OFF';
     this.reliefValveState = 'OPEN';
 }
@@ -64,9 +67,19 @@ LowLevelAPI.prototype.SetBoilerState = function(/* state */) {
 /*
     "This function turns the heating element in the warmer
     plate on or off."
+
+    Args:
+        state: A string with valid warmer state.
+
+    Returns:
+        Itself.
 */
-LowLevelAPI.prototype.SetWarmerState = function(/* state */) {
-    // const validStates = ['ON', 'OFF'];
+LowLevelAPI.prototype.SetWarmerState = function(state) {
+    const validStates = ['ON', 'OFF'];
+    if (validStates.includes(state)) {
+        this.warmerState = state;
+    }
+
     return this;
 };
 
