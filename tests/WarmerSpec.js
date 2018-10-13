@@ -11,9 +11,11 @@ describe('Warmer', function() {
     });
 
     it('should be able to reset itself', function() {
-        let result = warmer.initialize();
+        warmer.turnOff = jest.fn();
 
-        expect(result).toEqual(warmer);
+        warmer.initialize();
+
+        expect(warmer.turnOff).toHaveBeenCalled();
     });
 
     it('should be able to turn on', function() {

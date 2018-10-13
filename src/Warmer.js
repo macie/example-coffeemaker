@@ -15,6 +15,8 @@ function Warmer() {
         Itself.
 */
 Warmer.prototype.initialize = function() {
+    this.turnOff();
+
     return this;
 };
 
