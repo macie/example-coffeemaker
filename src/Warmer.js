@@ -2,6 +2,10 @@ import LowLevelAPI from './LowLevelAPI';
 
 /*
     A pot warmer model.
+
+    Attributes:
+        api: An interface of coffee machine low-level API.
+        overheatingCheckLoop: An ID of currently running check loop.
 */
 function Warmer() {
     this.api = new LowLevelAPI();
@@ -22,6 +26,9 @@ Warmer.prototype.initialize = function() {
 
 /*
     Turn on pot warmer.
+
+    Warmer in operational mode should have turned on heater when has non-empty
+    pot.
 
     Returns:
         Itself.
