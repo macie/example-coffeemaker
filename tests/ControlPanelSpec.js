@@ -15,9 +15,9 @@ describe('Control panel', function() {
     });
 
     it('should be able to turn on', function() {
-        let result = controlPanel.turnOn();
+        controlPanel.turnOn();
 
-        expect(result).toEqual(controlPanel);
+        expect(controlPanel.api.SetIndicatorState).toHaveBeenCalledWith('ON');
     });
 
     it('should be able to turn off', function() {

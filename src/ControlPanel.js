@@ -21,12 +21,16 @@ ControlPanel.prototype.initialize = function() {
 };
 
 /*
-    Press button on.
+    Turn on brew process.
+
+    Brew indicator should be turn on.
     
     Returns:
         Itself.
 */
-ControlPanel.prototype.turnOn = function () {
+ControlPanel.prototype.turnOn = function() {
+    this.api.SetIndicatorState('ON');
+
     return this;
 };
 
