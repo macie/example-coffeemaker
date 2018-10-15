@@ -21,9 +21,11 @@ describe('Control panel', function() {
     });
 
     it('should be able to turn off', function() {
-        let result = controlPanel.turnOff();
+        controlPanel.lightOff = jest.fn();
 
-        expect(result).toEqual(controlPanel);
+        controlPanel.turnOff();
+
+        expect(controlPanel.lightOff).toHaveBeenCalled();
     });
 
     it('should be able to turn off light', function() {

@@ -31,12 +31,16 @@ ControlPanel.prototype.turnOn = function () {
 };
 
 /*
-    Press button off.
+    Turn off brew process.
+
+    Brew indicator should be turn off.
     
     Returns:
         Itself.
 */
-ControlPanel.prototype.turnOff = function () {
+ControlPanel.prototype.turnOff = function() {
+    this.lightOff();
+
     return this;
 };
 
