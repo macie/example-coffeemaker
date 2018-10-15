@@ -41,12 +41,14 @@ ControlPanel.prototype.turnOff = function () {
 };
 
 /*
-    Light indicator off.
+    Turn off brew indicator light.
     
     Returns:
         Itself.
 */
-ControlPanel.prototype.lightOff = function () {
+ControlPanel.prototype.lightOff = function() {
+    this.api.SetIndicatorState('OFF');
+
     return this;
 };
 

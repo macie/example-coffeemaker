@@ -27,8 +27,8 @@ describe('Control panel', function() {
     });
 
     it('should be able to turn off light', function() {
-        let result = controlPanel.lightOff();
+        controlPanel.lightOff();
 
-        expect(result).toEqual(controlPanel);
+        expect(controlPanel.api.SetIndicatorState).toHaveBeenCalledWith('OFF');
     });
 });
