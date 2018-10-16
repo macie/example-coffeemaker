@@ -9,9 +9,11 @@ describe('Control panel', function() {
     });
 
     it('should be able to reset itself', function() {
-        let result = controlPanel.initialize();
+        controlPanel.lightOff = jest.fn();
 
-        expect(result).toEqual(controlPanel);
+        controlPanel.initialize();
+
+        expect(controlPanel.lightOff).toHaveBeenCalled();
     });
 
     it('should be able to turn on', function() {

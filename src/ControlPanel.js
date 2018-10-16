@@ -17,6 +17,8 @@ function ControlPanel() {
         Itself.
 */
 ControlPanel.prototype.initialize = function() {
+    this.turnOff();
+
     return this;
 };
 
