@@ -19,6 +19,8 @@ function CoffeeMaker() {
 /*
     Power on coffee maker.
 
+    Switching power on should initialize all components.
+
     Returns:
         Itself.
 */
@@ -32,6 +34,8 @@ CoffeeMaker.prototype.powerOn = function() {
 
 /*
     Power off coffee maker.
+
+    Switching power off should turn off all components.
 
     Returns:
         Itself.
