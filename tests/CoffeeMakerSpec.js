@@ -30,9 +30,23 @@ describe('CoffeeMaker', function() {
         });
     });
 
-    it('should be able to power off', function() {
-        let result = coffeeMaker.powerOff();
+    describe('while power off should turn off', function() {
+        it('control panel', function() {
+            coffeeMaker.powerOff();
 
-        expect(result).toEqual(coffeeMaker);
+            expect(coffeeMaker.controlPanel.turnOff).toHaveBeenCalled();
+        });
+
+        it('water boiler', function() {
+            coffeeMaker.powerOff();
+
+            expect(coffeeMaker.boiler.turnOff).toHaveBeenCalled();
+        });
+
+        it('pot warmer', function() {
+            coffeeMaker.powerOff();
+
+            expect(coffeeMaker.warmer.turnOff).toHaveBeenCalled();
+        });
     });
 });

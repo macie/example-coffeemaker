@@ -37,6 +37,10 @@ CoffeeMaker.prototype.powerOn = function() {
         Itself.
 */
 CoffeeMaker.prototype.powerOff = function() {
+    this.controlPanel.turnOff();
+    this.boiler.turnOff();
+    this.warmer.turnOff();
+
     return this;
 };
 
