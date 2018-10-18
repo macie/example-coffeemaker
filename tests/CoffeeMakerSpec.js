@@ -10,10 +10,24 @@ describe('CoffeeMaker', function() {
         coffeeMaker = new CoffeeMaker();
     });
 
-    it('should be able to power on', function() {
-        let result = coffeeMaker.powerOn();
+    describe('while power on should initialize', function() {
+        it('control panel', function() {
+            coffeeMaker.powerOn();
 
-        expect(result).toEqual(coffeeMaker);
+            expect(coffeeMaker.controlPanel.initialize).toHaveBeenCalled();
+        });
+
+        it('water boiler', function() {
+            coffeeMaker.powerOn();
+
+            expect(coffeeMaker.boiler.initialize).toHaveBeenCalled();
+        });
+
+        it('pot warmer', function() {
+            coffeeMaker.powerOn();
+
+            expect(coffeeMaker.warmer.initialize).toHaveBeenCalled();
+        });
     });
 
     it('should be able to power off', function() {

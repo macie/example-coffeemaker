@@ -23,6 +23,10 @@ function CoffeeMaker() {
         Itself.
 */
 CoffeeMaker.prototype.powerOn = function() {
+    this.controlPanel.initialize();
+    this.boiler.initialize();
+    this.warmer.initialize();
+
     return this;
 };
 
