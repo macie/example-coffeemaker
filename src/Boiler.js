@@ -1,3 +1,4 @@
+import Signal from './Signal';
 import LowLevelAPI from './LowLevelAPI';
 
 /*
@@ -6,10 +7,14 @@ import LowLevelAPI from './LowLevelAPI';
     Attributes:
         api: An interface of coffee machine low-level API.
         overheatingCheckLoop: An ID of currently running check loop.
+        signal: A dictionary with boiler signals.
 */
 function Boiler() {
     this.api = new LowLevelAPI();
     this.overheatingCheckLoop;
+    this.signal = {
+        drained: new Signal()
+    };
 }
 
 /*
@@ -27,8 +32,10 @@ Boiler.prototype.initialize = function() {
 /*
     Turn on water boiler.
 
-    Boiler in operational mode should have turned on heater and
-    closed relief valve.
+    Boiler in operational mode should:
+     - have turned on heater and closed relief valve,
+     - protect itself against overheating,
+     - inform when it has no more water.
     
     Returns:
         Itself.
@@ -42,6 +49,7 @@ Boiler.prototype.turnOn = function() {
     this.overheatingCheckLoop = setInterval(() => {
         if (this.isEmpty()) {
             this.turnOff();
+            this.signal.drained.emit();
         }
     }, REFRESH_RATE);
 

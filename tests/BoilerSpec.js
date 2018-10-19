@@ -1,3 +1,4 @@
+jest.mock('../src/Signal.js');
 jest.mock('../src/LowLevelAPI.js');
 import Boiler from '../src/Boiler';
 
@@ -38,6 +39,17 @@ describe('Boiler', function() {
 
         expect(boiler.isEmpty).toHaveBeenCalledTimes(3);
         expect(boiler.turnOff).toHaveBeenCalledTimes(1);
+    });
+
+    it('should be able to inform about boiling end', function() {
+        boiler.turnOff = jest.fn(boiler.turnOff);
+        boiler.isEmpty = jest.fn()
+            .mockReturnValue(true);
+
+        boiler.turnOn();
+        jest.advanceTimersByTime(1000);
+
+        expect(boiler.signal.drained.emit).toHaveBeenCalled();
     });
 
     it('should be able to turn off', function() {
