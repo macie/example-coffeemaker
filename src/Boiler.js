@@ -25,6 +25,7 @@ function Boiler() {
 */
 Boiler.prototype.initialize = function() {
     this.turnOff();
+    this.signal.drained.drop();
 
     return this;
 };

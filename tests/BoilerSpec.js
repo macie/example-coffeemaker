@@ -17,6 +17,7 @@ describe('Boiler', function() {
         boiler.initialize();
 
         expect(boiler.turnOff).toHaveBeenCalled();
+        expect(boiler.signal.drained.drop).toHaveBeenCalled();
     });
 
     it('should be able to turn on', function() {
