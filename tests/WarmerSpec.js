@@ -17,6 +17,7 @@ describe('Warmer', function() {
         warmer.initialize();
 
         expect(warmer.turnOff).toHaveBeenCalled();
+        expect(warmer.signal.potDrained.drop).toHaveBeenCalled();
     });
 
     it('should be able to turn on', function() {
