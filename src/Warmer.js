@@ -1,3 +1,4 @@
+import Signal from './Signal';
 import LowLevelAPI from './LowLevelAPI';
 
 /*
@@ -6,10 +7,14 @@ import LowLevelAPI from './LowLevelAPI';
     Attributes:
         api: An interface of coffee machine low-level API.
         overheatingCheckLoop: An ID of currently running check loop.
+        signal: A dictionary with pot warmer signals.
 */
 function Warmer() {
     this.api = new LowLevelAPI();
     this.overheatingCheckLoop;
+    this.signal = {
+        potDrained: new Signal()
+    };
 }
 
 /*
@@ -37,11 +42,18 @@ Warmer.prototype.turnOn = function() {
     const REFRESH_RATE = 1000;  // in ms
 
     this.overheatingCheckLoop = setInterval(() => {
-        if (this.isEmpty() || this.hasEmptyPot()) {
+        if (this.isEmpty()) {
             this.api.SetWarmerState('OFF');
-        } else {
-            this.api.SetWarmerState('ON');
+            return;
         }
+        if (this.hasEmptyPot()) {
+            this.api.SetWarmerState('OFF');
+            this.signal.potDrained.emit();
+            return;
+        }
+
+        this.api.SetWarmerState('ON');
+
     }, REFRESH_RATE);
 
     return this;

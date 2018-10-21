@@ -1,3 +1,4 @@
+jest.mock('../src/Signal.js');
 jest.mock('../src/LowLevelAPI.js');
 import Warmer from '../src/Warmer';
 
@@ -45,6 +46,18 @@ describe('Warmer', function() {
         jest.advanceTimersByTime(10000);
 
         expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('OFF');
+    });
+
+    it('should be able to inform about empty pot', function() {
+        warmer.isEmpty = jest.fn()
+            .mockReturnValue(false);
+        warmer.hasEmptyPot = jest.fn()
+            .mockReturnValue(true);
+
+        warmer.turnOn();
+        jest.advanceTimersByTime(1000);
+
+        expect(warmer.signal.potDrained.emit).toHaveBeenCalled();
     });
 
     it('should be able to turn off', function() {
