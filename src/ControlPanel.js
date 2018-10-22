@@ -23,7 +23,7 @@ function ControlPanel() {
         Itself.
 */
 ControlPanel.prototype.initialize = function() {
-    this.turnOff();
+    this.lightOff();
 
     return this;
 };
