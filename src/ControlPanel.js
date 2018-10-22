@@ -1,3 +1,4 @@
+import Signal from './Signal';
 import LowLevelAPI from './LowLevelAPI';
 
 /*
@@ -5,9 +6,13 @@ import LowLevelAPI from './LowLevelAPI';
 
     Attributes:
         api: An interface of coffee machine low-level API.
+        signal: A dictionary with boiler signals.
 */
 function ControlPanel() {
     this.api = new LowLevelAPI();
+    this.signal = {
+        turnedOn: new Signal()
+    };
 }
 
 /*
@@ -32,6 +37,7 @@ ControlPanel.prototype.initialize = function() {
 */
 ControlPanel.prototype.turnOn = function() {
     this.api.SetIndicatorState('ON');
+    this.signal.turnedOn.emit();
 
     return this;
 };

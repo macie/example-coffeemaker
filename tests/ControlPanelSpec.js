@@ -1,3 +1,4 @@
+jest.mock('../src/Signal.js');
 jest.mock('../src/LowLevelAPI.js');
 import ControlPanel from '../src/ControlPanel';
 
@@ -20,6 +21,12 @@ describe('Control panel', function() {
         controlPanel.turnOn();
 
         expect(controlPanel.api.SetIndicatorState).toHaveBeenCalledWith('ON');
+    });
+
+    it('should be able to inform about turning on', function() {
+        controlPanel.turnOn();
+
+        expect(controlPanel.signal.turnedOn.emit).toHaveBeenCalled();
     });
 
     it('should be able to turn off', function() {
