@@ -37,6 +37,12 @@ describe('Control panel', function() {
         expect(controlPanel.lightOff).toHaveBeenCalled();
     });
 
+    it('should be able to inform about turning off', function() {
+        controlPanel.turnOff();
+
+        expect(controlPanel.signal.turnedOff.emit).toHaveBeenCalled();
+    });
+
     it('should be able to turn off light', function() {
         controlPanel.lightOff();
 
