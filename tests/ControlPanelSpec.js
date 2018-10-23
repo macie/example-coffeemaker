@@ -15,6 +15,8 @@ describe('Control panel', function() {
         controlPanel.initialize();
 
         expect(controlPanel.lightOff).toHaveBeenCalled();
+        expect(controlPanel.signal.turnedOn.drop).toHaveBeenCalled();
+        expect(controlPanel.signal.turnedOff.drop).toHaveBeenCalled();
     });
 
     it('should be able to turn on', function() {

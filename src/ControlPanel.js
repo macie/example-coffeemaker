@@ -24,6 +24,8 @@ function ControlPanel() {
 */
 ControlPanel.prototype.initialize = function() {
     this.lightOff();
+    this.signal.turnedOn.drop();
+    this.signal.turnedOff.drop();
 
     return this;
 };
