@@ -8,8 +8,8 @@
             "type": "node",
             "request": "launch",
             "name": "Unit tests",
-            "program": "${workspaceFolder}/node_modules/jasmine-es6/bin/jasmine.js",
-            "args": ["--config=${workspaceFolder}/tests/config/jasmine.json"],
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": ["--config=${workspaceFolder}/tests/config/jest.json"],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen"
         }
