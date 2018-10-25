@@ -17,19 +17,19 @@ describe('CoffeeMaker', function() {
         it('control panel', function() {
             coffeeMaker.powerOn();
 
-            expect(coffeeMaker.controlPanel.initialize).toHaveBeenCalled();
+            expect(coffeeMaker.controlPanel.initialize).toHaveBeenCalledTimes(1);
         });
 
         it('water boiler', function() {
             coffeeMaker.powerOn();
 
-            expect(coffeeMaker.boiler.initialize).toHaveBeenCalled();
+            expect(coffeeMaker.boiler.initialize).toHaveBeenCalledTimes(1);
         });
 
         it('pot warmer', function() {
             coffeeMaker.powerOn();
 
-            expect(coffeeMaker.warmer.initialize).toHaveBeenCalled();
+            expect(coffeeMaker.warmer.initialize).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -37,19 +37,19 @@ describe('CoffeeMaker', function() {
         it('control panel', function() {
             coffeeMaker.powerOff();
 
-            expect(coffeeMaker.controlPanel.turnOff).toHaveBeenCalled();
+            expect(coffeeMaker.controlPanel.turnOff).toHaveBeenCalledTimes(1);
         });
 
         it('water boiler', function() {
             coffeeMaker.powerOff();
 
-            expect(coffeeMaker.boiler.turnOff).toHaveBeenCalled();
+            expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
         });
 
         it('pot warmer', function() {
             coffeeMaker.powerOff();
 
-            expect(coffeeMaker.warmer.turnOff).toHaveBeenCalled();
+            expect(coffeeMaker.warmer.turnOff).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -59,8 +59,8 @@ describe('CoffeeMaker', function() {
 
             coffeeMaker.controlPanel.signal.turnedOff.emit();
 
-            expect(coffeeMaker.boiler.turnOff).toHaveBeenCalled();
-            expect(coffeeMaker.warmer.turnOff).toHaveBeenCalled();
+            expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
+            expect(coffeeMaker.warmer.turnOff).toHaveBeenCalledTimes(1);
         });
     });
 });
