@@ -53,14 +53,23 @@ describe('CoffeeMaker', function() {
         });
     });
 
-    describe('while receive signal', function() {
-        it('turned off should turned off boiler and warmer', function() {
-            coffeeMaker.powerOn();
+    describe('after receive specific signal', function() {
+        describe('should turn off', function() {
+            it('boiler', function() {
+                coffeeMaker.powerOn();
 
-            coffeeMaker.controlPanel.signal.turnedOff.emit();
+                coffeeMaker.controlPanel.signal.turnedOff.emit();
 
-            expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
-            expect(coffeeMaker.warmer.turnOff).toHaveBeenCalledTimes(1);
+                expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
+            });
+
+            it('warmer', function() {
+                coffeeMaker.powerOn();
+
+                coffeeMaker.controlPanel.signal.turnedOff.emit();
+
+                expect(coffeeMaker.warmer.turnOff).toHaveBeenCalledTimes(1);
+            });
         });
     });
 });
