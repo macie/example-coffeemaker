@@ -53,8 +53,8 @@ describe('CoffeeMaker', function() {
         });
     });
 
-    describe('after receive specific signal', function() {
-        describe('should turn off', function() {
+    describe('after receive signal', function() {
+        describe('turnedOff - should turn off', function() {
             it('boiler', function() {
                 coffeeMaker.powerOn();
 
@@ -70,6 +70,14 @@ describe('CoffeeMaker', function() {
 
                 expect(coffeeMaker.warmer.turnOff).toHaveBeenCalledTimes(1);
             });
+        });
+
+        it('missingPot - should turn off boiler', function() {
+            coffeeMaker.powerOn();
+
+            coffeeMaker.warmer.signal.missingPot.emit();
+
+            expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
         });
     });
 });
