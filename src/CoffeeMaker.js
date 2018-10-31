@@ -26,6 +26,10 @@ function CoffeeMaker() {
 */
 CoffeeMaker.prototype.powerOn = function() {
     this.controlPanel.initialize();
+    this.controlPanel.signal.turnedOn.receiveWith(
+        this.boiler.turnOn,
+        this.warmer.turnOn
+    );
     this.controlPanel.signal.turnedOff.receiveWith(
         this.boiler.turnOff,
         this.warmer.turnOff

@@ -8,8 +8,10 @@ describe('CoffeeMaker', function() {
         coffeeMaker.controlPanel.initialize = jest.fn();
         coffeeMaker.controlPanel.turnOff = jest.fn();
         coffeeMaker.boiler.initialize = jest.fn();
+        coffeeMaker.boiler.turnOn = jest.fn();
         coffeeMaker.boiler.turnOff = jest.fn();
         coffeeMaker.warmer.initialize = jest.fn();
+        coffeeMaker.warmer.turnOn = jest.fn();
         coffeeMaker.warmer.turnOff = jest.fn();
     });
 
@@ -54,6 +56,24 @@ describe('CoffeeMaker', function() {
     });
 
     describe('after receive signal', function() {
+        describe('turnedOn - should turn on', function() {
+            it('boiler', function() {
+                coffeeMaker.powerOn();
+
+                coffeeMaker.controlPanel.signal.turnedOn.emit();
+
+                expect(coffeeMaker.boiler.turnOn).toHaveBeenCalledTimes(1);
+            });
+
+            it('warmer', function() {
+                coffeeMaker.powerOn();
+
+                coffeeMaker.controlPanel.signal.turnedOn.emit();
+
+                expect(coffeeMaker.warmer.turnOn).toHaveBeenCalledTimes(1);
+            });
+        });
+
         describe('turnedOff - should turn off', function() {
             it('boiler', function() {
                 coffeeMaker.powerOn();
