@@ -26,8 +26,9 @@ function Warmer() {
 */
 Warmer.prototype.initialize = function() {
     this.turnOff();
-    this.signal.potDrained.drop();
-    this.signal.missingPot.drop();
+    for (let name in this.signal) {
+        this.signal[name].drop();
+    }
 
     return this;
 };
