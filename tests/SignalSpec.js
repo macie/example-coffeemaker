@@ -1,13 +1,13 @@
 import Signal from '../src/Signal';
 
-describe('Signal', function() {
+describe('Signal', () => {
     let signal;
 
-    beforeEach(function() {
+    beforeEach(() => {
         signal = new Signal();
     });
 
-    it('should be able to register one receiver', function() {
+    it('should be able to register one receiver', () => {
         let emptyAction = () => {};
 
         signal.receiveWith(emptyAction);
@@ -15,7 +15,7 @@ describe('Signal', function() {
         expect(signal.receivers.size).toEqual(1);
     });
 
-    it('should be able to register many receivers', function() {
+    it('should be able to register many receivers', () => {
         let emptyAction = () => {};
         let someAction = () => {return 1;};
 
@@ -24,7 +24,7 @@ describe('Signal', function() {
         expect(signal.receivers.size).toEqual(2);
     });
 
-    it('should ignore registering duplicated receivers', function() {
+    it('should ignore registering duplicated receivers', () => {
         let emptyAction = () => {};
         let someAction = () => {return 1;};
 
@@ -33,7 +33,7 @@ describe('Signal', function() {
         expect(signal.receivers.size).toEqual(2);
     });
 
-    it('should be able to disconnect all receivers', function() {
+    it('should be able to disconnect all receivers', () => {
         let emptyAction = () => {};
         signal.receivers.add(emptyAction);
 
@@ -42,7 +42,7 @@ describe('Signal', function() {
         expect(signal.receivers.size).toEqual(0);
     });
 
-    it('should be able to emit signals', function() {
+    it('should be able to emit signals', () => {
         let callTracker = '';
         let someAction = () => {callTracker += 'x';};
         let anotherAction = () => {callTracker += 'y';};

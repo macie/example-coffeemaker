@@ -1,20 +1,20 @@
 import LowLevelAPI from '../src/LowLevelAPI';
 
-describe('LowLevelAPI', function() {
+describe('LowLevelAPI', () => {
     let lowLevelAPI;
 
-    beforeEach(function() {
+    beforeEach(() => {
         lowLevelAPI = new LowLevelAPI();
     });
 
-    describe('for boiler', function() {
-        it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
+    describe('for boiler', () => {
+        it.each(['ON', 'OFF'])('should be able to change state for valid state', (validState) => {
             lowLevelAPI.SetBoilerState(validState);
 
             expect(lowLevelAPI.boilerState).toEqual(validState);
         });
 
-        it('should preserve current state when given invalid state', function() {
+        it('should preserve current state when given invalid state', () => {
             let invalidState = 'STAND_BY';
 
             lowLevelAPI.SetBoilerState(invalidState);
@@ -22,7 +22,7 @@ describe('LowLevelAPI', function() {
             expect(lowLevelAPI.boilerState).not.toEqual(invalidState);
         });
 
-        it('should be able to respond with valid status', function() {
+        it('should be able to respond with valid status', () => {
             let validStatuses = ['EMPTY', 'NOT_EMPTY'];
 
             let result = lowLevelAPI.GetBoilerStatus();
@@ -31,14 +31,14 @@ describe('LowLevelAPI', function() {
         });
     });
 
-    describe('for relief valve', function() {
-        it.each(['OPEN', 'CLOSED'])('should be able to change state for valid state', function(validState) {
+    describe('for relief valve', () => {
+        it.each(['OPEN', 'CLOSED'])('should be able to change state for valid state', (validState) => {
             lowLevelAPI.SetReliefValveState(validState);
 
             expect(lowLevelAPI.reliefValveState).toEqual(validState);
         });
 
-        it('should preserve current state when given invalid state', function() {
+        it('should preserve current state when given invalid state', () => {
             let invalidState = 'HALF_OPEN';
 
             lowLevelAPI.SetReliefValveState(invalidState);
@@ -47,14 +47,14 @@ describe('LowLevelAPI', function() {
         });
     });
 
-    describe('for warmer', function() {
-        it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
+    describe('for warmer', () => {
+        it.each(['ON', 'OFF'])('should be able to change state for valid state', (validState) => {
             lowLevelAPI.SetWarmerState(validState);
 
             expect(lowLevelAPI.warmerState).toEqual(validState);
         });
 
-        it('should preserve current state when given invalid state', function() {
+        it('should preserve current state when given invalid state', () => {
             let invalidState = 'STAND_BY';
 
             lowLevelAPI.SetWarmerState(invalidState);
@@ -62,7 +62,7 @@ describe('LowLevelAPI', function() {
             expect(lowLevelAPI.warmerState).not.toEqual(invalidState);
         });
 
-        it('should be able to respond with valid plate status', function() {
+        it('should be able to respond with valid plate status', () => {
             let validStatuses = ['WARMER_EMPTY', 'POT_EMPTY', 'POT_NOT_EMPTY'];
 
             let result = lowLevelAPI.GetWarmerPlateStatus();
@@ -71,7 +71,7 @@ describe('LowLevelAPI', function() {
         });
     });
 
-    it('for brew button should be able to respond with valid status', function() {
+    it('for brew button should be able to respond with valid status', () => {
         let validStatuses = ['PUSHED', 'NOT_PUSHED'];
 
         let result = lowLevelAPI.GetBrewButtonStatus();
@@ -79,14 +79,14 @@ describe('LowLevelAPI', function() {
         expect(validStatuses).toContain(result);
     });
 
-    describe('for indicator', function() {
-        it.each(['ON', 'OFF'])('should be able to change state for valid state', function(validState) {
+    describe('for indicator', () => {
+        it.each(['ON', 'OFF'])('should be able to change state for valid state', (validState) => {
             lowLevelAPI.SetIndicatorState(validState);
 
             expect(lowLevelAPI.indicatorState).toEqual(validState);
         });
 
-        it('should preserve current state when given invalid state', function() {
+        it('should preserve current state when given invalid state', () => {
             let invalidState = 'FLASHING';
 
             lowLevelAPI.SetIndicatorState(invalidState);

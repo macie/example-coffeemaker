@@ -4,14 +4,14 @@ import Warmer from '../src/Warmer';
 
 jest.useFakeTimers();
 
-describe('Warmer', function() {
+describe('Warmer', () => {
     let warmer;
 
-    beforeEach(function() {
+    beforeEach(() => {
         warmer = new Warmer();
     });
 
-    it('should be able to reset itself', function() {
+    it('should be able to reset itself', () => {
         warmer.turnOff = jest.fn();
 
         warmer.initialize();
@@ -21,7 +21,7 @@ describe('Warmer', function() {
         expect(warmer.signal.missingPot.drop).toHaveBeenCalled();
     });
 
-    it('should be able to turn on', function() {
+    it('should be able to turn on', () => {
         warmer.isEmpty = jest.fn().mockReturnValue(false);
         warmer.hasEmptyPot = jest.fn().mockReturnValue(false);
 
@@ -31,7 +31,7 @@ describe('Warmer', function() {
         expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('ON');
     });
 
-    it('should protect itself against overheating ', function() {
+    it('should protect itself against overheating ', () => {
         warmer.isEmpty = jest.fn()
             .mockReturnValueOnce(false)
             .mockReturnValueOnce(true)
@@ -50,7 +50,7 @@ describe('Warmer', function() {
         expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('OFF');
     });
 
-    it('should be able to inform about empty pot', function() {
+    it('should be able to inform about empty pot', () => {
         warmer.isEmpty = jest.fn()
             .mockReturnValue(false);
         warmer.hasEmptyPot = jest.fn()
@@ -62,7 +62,7 @@ describe('Warmer', function() {
         expect(warmer.signal.potDrained.emit).toHaveBeenCalled();
     });
 
-    it('should be able to inform about missing pot', function() {
+    it('should be able to inform about missing pot', () => {
         warmer.isEmpty = jest.fn()
             .mockReturnValue(true);
         warmer.hasEmptyPot = jest.fn()
@@ -74,14 +74,14 @@ describe('Warmer', function() {
         expect(warmer.signal.missingPot.emit).toHaveBeenCalled();
     });
 
-    it('should be able to turn off', function() {
+    it('should be able to turn off', () => {
         warmer.turnOff();
 
         expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('OFF');
     });
 
-    describe('should indicate if pot warmer', function() {
-        it('is empty', function() {
+    describe('should indicate if pot warmer', () => {
+        it('is empty', () => {
             warmer.api.GetWarmerPlateStatus.mockReturnValue('WARMER_EMPTY');
 
             let result = warmer.isEmpty();
@@ -89,7 +89,7 @@ describe('Warmer', function() {
             expect(result).toBeTruthy();
         });
 
-        it('is not empty', function() {
+        it('is not empty', () => {
             warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_EMPTY');
 
             let result = warmer.isEmpty();
@@ -98,8 +98,8 @@ describe('Warmer', function() {
         });
     });
 
-    describe('should indicate if pot warmer', function() {
-        it('has filled pot', function() {
+    describe('should indicate if pot warmer', () => {
+        it('has filled pot', () => {
             warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_NOT_EMPTY');
 
             let result = warmer.hasEmptyPot();
@@ -107,7 +107,7 @@ describe('Warmer', function() {
             expect(result).toBeFalsy();
         });
 
-        it('has empty pot', function() {
+        it('has empty pot', () => {
             warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_EMPTY');
 
             let result = warmer.hasEmptyPot();

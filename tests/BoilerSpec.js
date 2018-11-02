@@ -4,14 +4,14 @@ import Boiler from '../src/Boiler';
 
 jest.useFakeTimers();
 
-describe('Boiler', function() {
+describe('Boiler', () => {
     let boiler;
 
-    beforeEach(function() {
+    beforeEach(() => {
         boiler = new Boiler();
     });
 
-    it('should be able to reset itself', function() {
+    it('should be able to reset itself', () => {
         boiler.turnOff = jest.fn();
 
         boiler.initialize();
@@ -20,14 +20,14 @@ describe('Boiler', function() {
         expect(boiler.signal.drained.drop).toHaveBeenCalled();
     });
 
-    it('should be able to turn on', function() {
+    it('should be able to turn on', () => {
         boiler.turnOn();
 
         expect(boiler.api.SetBoilerState).toHaveBeenCalledWith('ON');
         expect(boiler.api.SetReliefValveState).toHaveBeenCalledWith('CLOSED');
     });
 
-    it('should protect itself against overheating ', function() {
+    it('should protect itself against overheating ', () => {
         boiler.turnOff = jest.fn(boiler.turnOff);
         boiler.isEmpty = jest.fn()
             .mockReturnValueOnce(false)
@@ -42,7 +42,7 @@ describe('Boiler', function() {
         expect(boiler.turnOff).toHaveBeenCalledTimes(1);
     });
 
-    it('should be able to inform about boiling end', function() {
+    it('should be able to inform about boiling end', () => {
         boiler.turnOff = jest.fn(boiler.turnOff);
         boiler.isEmpty = jest.fn()
             .mockReturnValue(true);
@@ -53,15 +53,15 @@ describe('Boiler', function() {
         expect(boiler.signal.drained.emit).toHaveBeenCalled();
     });
 
-    it('should be able to turn off', function() {
+    it('should be able to turn off', () => {
         boiler.turnOff();
 
         expect(boiler.api.SetBoilerState).toHaveBeenCalledWith('OFF');
         expect(boiler.api.SetReliefValveState).toHaveBeenCalledWith('OPEN');
     });
 
-    describe('should indicate if', function() {
-        it('is empty', function() {
+    describe('should indicate if', () => {
+        it('is empty', () => {
             boiler.api.GetBoilerStatus.mockReturnValue('EMPTY');
 
             let result = boiler.isEmpty();
@@ -69,7 +69,7 @@ describe('Boiler', function() {
             expect(result).toBeTruthy();
         });
 
-        it('is not empty', function() {
+        it('is not empty', () => {
             boiler.api.GetBoilerStatus.mockReturnValue('NOT_EMPTY');
 
             let result = boiler.isEmpty();

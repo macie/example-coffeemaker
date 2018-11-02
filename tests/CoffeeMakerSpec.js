@@ -1,9 +1,9 @@
 import CoffeeMaker from '../src/CoffeeMaker';
 
-describe('CoffeeMaker', function() {
+describe('CoffeeMaker', () => {
     let coffeeMaker;
 
-    beforeEach(function() {
+    beforeEach(() => {
         coffeeMaker = new CoffeeMaker();
         coffeeMaker.controlPanel.initialize = jest.fn();
         coffeeMaker.controlPanel.turnOff = jest.fn();
@@ -15,49 +15,49 @@ describe('CoffeeMaker', function() {
         coffeeMaker.warmer.turnOff = jest.fn();
     });
 
-    describe('while power on should initialize', function() {
-        it('control panel', function() {
+    describe('while power on should initialize', () => {
+        it('control panel', () => {
             coffeeMaker.powerOn();
 
             expect(coffeeMaker.controlPanel.initialize).toHaveBeenCalledTimes(1);
         });
 
-        it('water boiler', function() {
+        it('water boiler', () => {
             coffeeMaker.powerOn();
 
             expect(coffeeMaker.boiler.initialize).toHaveBeenCalledTimes(1);
         });
 
-        it('pot warmer', function() {
+        it('pot warmer', () => {
             coffeeMaker.powerOn();
 
             expect(coffeeMaker.warmer.initialize).toHaveBeenCalledTimes(1);
         });
     });
 
-    describe('while power off should turn off', function() {
-        it('control panel', function() {
+    describe('while power off should turn off', () => {
+        it('control panel', () => {
             coffeeMaker.powerOff();
 
             expect(coffeeMaker.controlPanel.turnOff).toHaveBeenCalledTimes(1);
         });
 
-        it('water boiler', function() {
+        it('water boiler', () => {
             coffeeMaker.powerOff();
 
             expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
         });
 
-        it('pot warmer', function() {
+        it('pot warmer', () => {
             coffeeMaker.powerOff();
 
             expect(coffeeMaker.warmer.turnOff).toHaveBeenCalledTimes(1);
         });
     });
 
-    describe('after receive signal', function() {
-        describe('turnedOn - should turn on', function() {
-            it('boiler', function() {
+    describe('after receive signal', () => {
+        describe('turnedOn - should turn on', () => {
+            it('boiler', () => {
                 coffeeMaker.powerOn();
 
                 coffeeMaker.controlPanel.signal.turnedOn.emit();
@@ -65,7 +65,7 @@ describe('CoffeeMaker', function() {
                 expect(coffeeMaker.boiler.turnOn).toHaveBeenCalledTimes(1);
             });
 
-            it('warmer', function() {
+            it('warmer', () => {
                 coffeeMaker.powerOn();
 
                 coffeeMaker.controlPanel.signal.turnedOn.emit();
@@ -74,8 +74,8 @@ describe('CoffeeMaker', function() {
             });
         });
 
-        describe('turnedOff - should turn off', function() {
-            it('boiler', function() {
+        describe('turnedOff - should turn off', () => {
+            it('boiler', () => {
                 coffeeMaker.powerOn();
 
                 coffeeMaker.controlPanel.signal.turnedOff.emit();
@@ -83,7 +83,7 @@ describe('CoffeeMaker', function() {
                 expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
             });
 
-            it('warmer', function() {
+            it('warmer', () => {
                 coffeeMaker.powerOn();
 
                 coffeeMaker.controlPanel.signal.turnedOff.emit();
@@ -92,7 +92,7 @@ describe('CoffeeMaker', function() {
             });
         });
 
-        it('missingPot - should turn off boiler', function() {
+        it('missingPot - should turn off boiler', () => {
             coffeeMaker.powerOn();
 
             coffeeMaker.warmer.signal.missingPot.emit();
