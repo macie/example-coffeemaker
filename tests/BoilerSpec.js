@@ -27,7 +27,7 @@ describe('Boiler', () => {
         expect(boiler.api.SetReliefValveState).toHaveBeenCalledWith('CLOSED');
     });
 
-    it('should protect itself against overheating ', () => {
+    it('should protect itself against overheating', () => {
         boiler.turnOff = jest.fn(boiler.turnOff);
         boiler.isEmpty = jest.fn()
             .mockReturnValueOnce(false)
@@ -39,6 +39,17 @@ describe('Boiler', () => {
         jest.advanceTimersByTime(10000);
 
         expect(boiler.isEmpty).toHaveBeenCalledTimes(3);
+        expect(boiler.turnOff).toHaveBeenCalledTimes(1);
+    });
+
+    it('should maintain only one overheating check', () => {
+        boiler.turnOff = jest.fn(boiler.turnOff);
+        boiler.isEmpty = jest.fn().mockReturnValue(false);
+        boiler.turnOn();
+
+        boiler.turnOn();
+        jest.advanceTimersByTime(10000);
+
         expect(boiler.turnOff).toHaveBeenCalledTimes(1);
     });
 

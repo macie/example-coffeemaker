@@ -44,6 +44,10 @@ Boiler.prototype.initialize = function() {
 Boiler.prototype.turnOn = function() {
     const REFRESH_RATE = 1000;  // in ms
 
+    if (this.overheatingCheckLoop) {
+        this.turnOff();
+    }
+
     this.api.SetBoilerState('ON');
     this.api.SetReliefValveState('CLOSED');
 
