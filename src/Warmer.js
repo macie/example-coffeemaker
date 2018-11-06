@@ -45,6 +45,10 @@ Warmer.prototype.initialize = function() {
 Warmer.prototype.turnOn = function() {
     const REFRESH_RATE = 1000;  // in ms
 
+    if (this.overheatingCheckLoop) {
+        this.turnOff();
+    }
+
     this.overheatingCheckLoop = setInterval(() => {
         if (this.isEmpty()) {
             this.api.SetWarmerState('OFF');

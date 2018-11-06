@@ -50,6 +50,18 @@ describe('Warmer', () => {
         expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('OFF');
     });
 
+    it('should maintain only one overheating check', () => {
+        warmer.turnOff = jest.fn(warmer.turnOff);
+        warmer.isEmpty = jest.fn().mockReturnValue(false);
+        warmer.hasEmptyPot = jest.fn().mockReturnValue(false);
+        warmer.turnOn();
+
+        warmer.turnOn();
+        jest.advanceTimersByTime(10000);
+
+        expect(warmer.turnOff).toHaveBeenCalledTimes(1);
+    });
+
     it('should be able to inform about empty pot', () => {
         warmer.isEmpty = jest.fn()
             .mockReturnValue(false);
