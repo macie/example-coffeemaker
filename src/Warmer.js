@@ -14,7 +14,8 @@ function Warmer() {
     this.overheatingCheckLoop;
     this.signal = {
         potDrained: new Signal(),
-        potRemoved: new Signal()
+        potRemoved: new Signal(),
+        potReturned: new Signal()
     };
 }
 
