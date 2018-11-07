@@ -14,7 +14,7 @@ function Warmer() {
     this.overheatingCheckLoop;
     this.signal = {
         potDrained: new Signal(),
-        missingPot: new Signal()
+        potRemoved: new Signal()
     };
 }
 
@@ -52,7 +52,7 @@ Warmer.prototype.turnOn = function() {
     this.overheatingCheckLoop = setInterval(() => {
         if (this.isEmpty()) {
             this.api.SetWarmerState('OFF');
-            this.signal.missingPot.emit();
+            this.signal.potRemoved.emit();
             return;
         }
         if (this.hasEmptyPot()) {

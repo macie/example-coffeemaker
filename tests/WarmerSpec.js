@@ -18,7 +18,7 @@ describe('Warmer', () => {
 
         expect(warmer.turnOff).toHaveBeenCalled();
         expect(warmer.signal.potDrained.drop).toHaveBeenCalled();
-        expect(warmer.signal.missingPot.drop).toHaveBeenCalled();
+        expect(warmer.signal.potRemoved.drop).toHaveBeenCalled();
     });
 
     it('should be able to turn on', () => {
@@ -83,7 +83,7 @@ describe('Warmer', () => {
         warmer.turnOn();
         jest.advanceTimersByTime(1000);
 
-        expect(warmer.signal.missingPot.emit).toHaveBeenCalled();
+        expect(warmer.signal.potRemoved.emit).toHaveBeenCalled();
     });
 
     it('should be able to turn off', () => {

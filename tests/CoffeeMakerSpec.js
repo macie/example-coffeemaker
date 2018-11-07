@@ -92,10 +92,10 @@ describe('CoffeeMaker', () => {
             });
         });
 
-        it('missingPot - should turn off boiler', () => {
+        it('potRemoved - should turn off boiler', () => {
             coffeeMaker.powerOn();
 
-            coffeeMaker.warmer.signal.missingPot.emit();
+            coffeeMaker.warmer.signal.potRemoved.emit();
 
             expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
         });
