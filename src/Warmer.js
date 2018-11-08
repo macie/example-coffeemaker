@@ -45,25 +45,28 @@ Warmer.prototype.initialize = function() {
 */
 Warmer.prototype.turnOn = function() {
     const REFRESH_RATE = 1000;  // in ms
+    let wasOn = false;
 
     if (this.overheatingCheckLoop) {
         this.turnOff();
     }
 
     this.overheatingCheckLoop = setInterval(() => {
-        if (this.isEmpty()) {
-            this.api.SetWarmerState('OFF');
-            this.signal.potRemoved.emit();
-            return;
-        }
-        if (this.hasEmptyPot()) {
-            this.api.SetWarmerState('OFF');
-            this.signal.potDrained.emit();
-            return;
+        const isEmpty = this.isEmpty();
+        const isOn = !this.hasEmptyPot() && !isEmpty;  // beware: order matters (short-circuit evaluation)
+        const stateChanged = (wasOn !== isOn);
+
+        if (stateChanged) {
+            this.api.SetWarmerState(isOn ? 'ON' : 'OFF');
+
+            if (isEmpty) {
+                this.signal.potRemoved.emit();
+            } else {
+                this.signal.potReturned.emit();
+            }
         }
 
-        this.api.SetWarmerState('ON');
-
+        wasOn = isOn;
     }, REFRESH_RATE);
 
     return this;
