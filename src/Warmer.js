@@ -13,7 +13,6 @@ function Warmer() {
     this.api = new LowLevelAPI();
     this.overheatingCheckLoop;
     this.signal = {
-        potDrained: new Signal(),
         potRemoved: new Signal(),
         potReturned: new Signal()
     };

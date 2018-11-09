@@ -17,8 +17,8 @@ describe('Warmer', () => {
         warmer.initialize();
 
         expect(warmer.turnOff).toHaveBeenCalled();
-        expect(warmer.signal.potDrained.drop).toHaveBeenCalled();
         expect(warmer.signal.potRemoved.drop).toHaveBeenCalled();
+        expect(warmer.signal.potReturned.drop).toHaveBeenCalled();
     });
 
     it('should be able to turn on', () => {
@@ -60,18 +60,6 @@ describe('Warmer', () => {
         jest.advanceTimersByTime(10000);
 
         expect(warmer.turnOff).toHaveBeenCalledTimes(1);
-    });
-
-    xit('should be able to inform about empty pot', () => {
-        warmer.isEmpty = jest.fn()
-            .mockReturnValue(false);
-        warmer.hasEmptyPot = jest.fn()
-            .mockReturnValue(true);
-
-        warmer.turnOn();
-        jest.advanceTimersByTime(1000);
-
-        expect(warmer.signal.potDrained.emit).toHaveBeenCalled();
     });
 
     it('should be able to inform about removed pot', () => {
