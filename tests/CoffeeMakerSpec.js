@@ -99,5 +99,13 @@ describe('CoffeeMaker', () => {
 
             expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
         });
+
+        it('potReturned - should turn on boiler', () => {
+            coffeeMaker.powerOn();
+
+            coffeeMaker.warmer.signal.potReturned.emit();
+
+            expect(coffeeMaker.boiler.turnOn).toHaveBeenCalledTimes(1);
+        });
     });
 });
