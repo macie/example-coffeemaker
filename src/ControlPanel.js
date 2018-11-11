@@ -11,8 +11,8 @@ import LowLevelAPI from './LowLevelAPI';
 function ControlPanel() {
     this.api = new LowLevelAPI();
     this.signal = {
-        turnedOn: new Signal(),
-        turnedOff: new Signal()
+        startBrewing: new Signal(),
+        stopBrewing: new Signal()
     };
 }
 
@@ -24,8 +24,8 @@ function ControlPanel() {
 */
 ControlPanel.prototype.initialize = function() {
     this.lightOff();
-    this.signal.turnedOn.drop();
-    this.signal.turnedOff.drop();
+    this.signal.startBrewing.drop();
+    this.signal.stopBrewing.drop();
 
     return this;
 };
@@ -40,7 +40,7 @@ ControlPanel.prototype.initialize = function() {
 */
 ControlPanel.prototype.turnOn = function() {
     this.api.SetIndicatorState('ON');
-    this.signal.turnedOn.emit();
+    this.signal.startBrewing.emit();
 
     return this;
 };
@@ -55,7 +55,7 @@ ControlPanel.prototype.turnOn = function() {
 */
 ControlPanel.prototype.turnOff = function() {
     this.lightOff();
-    this.signal.turnedOff.emit();
+    this.signal.stopBrewing.emit();
 
     return this;
 };

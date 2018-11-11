@@ -56,11 +56,11 @@ describe('CoffeeMaker', () => {
     });
 
     describe('after receive signal', () => {
-        describe('turnedOn - should turn on', () => {
+        describe('startBrewing - should turn on', () => {
             it('boiler', () => {
                 coffeeMaker.powerOn();
 
-                coffeeMaker.controlPanel.signal.turnedOn.emit();
+                coffeeMaker.controlPanel.signal.startBrewing.emit();
 
                 expect(coffeeMaker.boiler.turnOn).toHaveBeenCalledTimes(1);
             });
@@ -68,17 +68,17 @@ describe('CoffeeMaker', () => {
             it('warmer', () => {
                 coffeeMaker.powerOn();
 
-                coffeeMaker.controlPanel.signal.turnedOn.emit();
+                coffeeMaker.controlPanel.signal.startBrewing.emit();
 
                 expect(coffeeMaker.warmer.turnOn).toHaveBeenCalledTimes(1);
             });
         });
 
-        describe('turnedOff - should turn off', () => {
+        describe('stopBrewing - should turn off', () => {
             it('boiler', () => {
                 coffeeMaker.powerOn();
 
-                coffeeMaker.controlPanel.signal.turnedOff.emit();
+                coffeeMaker.controlPanel.signal.stopBrewing.emit();
 
                 expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
             });
@@ -86,7 +86,7 @@ describe('CoffeeMaker', () => {
             it('warmer', () => {
                 coffeeMaker.powerOn();
 
-                coffeeMaker.controlPanel.signal.turnedOff.emit();
+                coffeeMaker.controlPanel.signal.stopBrewing.emit();
 
                 expect(coffeeMaker.warmer.turnOff).toHaveBeenCalledTimes(1);
             });

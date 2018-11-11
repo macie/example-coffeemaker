@@ -15,8 +15,8 @@ describe('Control panel', () => {
         controlPanel.initialize();
 
         expect(controlPanel.lightOff).toHaveBeenCalled();
-        expect(controlPanel.signal.turnedOn.drop).toHaveBeenCalled();
-        expect(controlPanel.signal.turnedOff.drop).toHaveBeenCalled();
+        expect(controlPanel.signal.startBrewing.drop).toHaveBeenCalled();
+        expect(controlPanel.signal.stopBrewing.drop).toHaveBeenCalled();
     });
 
     it('should be able to turn on', () => {
@@ -28,7 +28,7 @@ describe('Control panel', () => {
     it('should be able to inform about turning on', () => {
         controlPanel.turnOn();
 
-        expect(controlPanel.signal.turnedOn.emit).toHaveBeenCalled();
+        expect(controlPanel.signal.startBrewing.emit).toHaveBeenCalled();
     });
 
     it('should be able to turn off', () => {
@@ -42,7 +42,7 @@ describe('Control panel', () => {
     it('should be able to inform about turning off', () => {
         controlPanel.turnOff();
 
-        expect(controlPanel.signal.turnedOff.emit).toHaveBeenCalled();
+        expect(controlPanel.signal.stopBrewing.emit).toHaveBeenCalled();
     });
 
     it('should be able to turn off light', () => {
