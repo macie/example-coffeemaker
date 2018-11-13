@@ -11,6 +11,21 @@ function Watchdog() {
 }
 
 /*
+    Set watchdog timer interval.
+
+    Args:
+        interval: A watchdog timer interval (in ms).
+
+    Returns:
+        Itself.
+*/
+Watchdog.prototype.timerInterval = function(interval) {
+    this.timeout = interval;
+
+    return this;
+};
+
+/*
     Disable watchdog timer.
 
     Returns:
