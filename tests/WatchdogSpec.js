@@ -17,6 +17,13 @@ describe('Watchdog', () => {
         expect(watchdog.timeout).toEqual(time);
     });
 
+    it('should be able to start itself', () => {
+        watchdog.start();
+
+        expect(setInterval).toHaveBeenCalledWith(
+            watchdog.failSafeCheck, watchdog.timeout);
+    });
+
     it('should be able to disable itself', () => {
         const processId = 123;
         watchdog.pid = processId;
