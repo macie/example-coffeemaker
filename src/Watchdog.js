@@ -35,7 +35,7 @@ Watchdog.prototype.timerInterval = function(interval) {
 */
 Watchdog.prototype.start = function() {
     if (this.pid) {
-        this.disable();
+        this.stop();
     }
 
     this.pid = setInterval(this.failSafeCheck, this.timeout);
@@ -44,12 +44,12 @@ Watchdog.prototype.start = function() {
 };
 
 /*
-    Disable watchdog timer.
+    Stop watchdog timer.
 
     Returns:
         Itself.
 */
-Watchdog.prototype.disable = function() {
+Watchdog.prototype.stop = function() {
     clearInterval(this.pid);
     this.pid = null;
 
