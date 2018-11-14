@@ -24,6 +24,16 @@ describe('Watchdog', () => {
             watchdog.failSafeCheck, watchdog.timeout);
     });
 
+    it('should maintain only one check loop', () => {
+        watchdog.failSafeCheck = jest.fn();
+        watchdog.start();
+
+        watchdog.start();
+        jest.advanceTimersByTime(3000);
+
+        expect(watchdog.failSafeCheck).toHaveBeenCalledTimes(3);
+    });
+
     it('should be able to stop', () => {
         const processId = 123;
         watchdog.pid = processId;
