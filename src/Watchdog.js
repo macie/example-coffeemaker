@@ -5,11 +5,13 @@
         failSafeCheck: A function with fail-safe action.
         timeout: A watchdog timer interval (in ms). Default: 1 second.
         pid: A watchdog process ID.
+        rules: A collection of tests and actions.
 */
 function Watchdog() {
     this.failSafeCheck = () => {};
     this.timeout = 1000;
     this.pid;
+    this.rules = new Map();
 }
 
 /*
