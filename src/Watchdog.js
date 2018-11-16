@@ -30,6 +30,22 @@ Watchdog.prototype.timerInterval = function(interval) {
 };
 
 /*
+    Add watchdog specification.
+
+    Args:
+        test: A function with test definition.
+        action: A function with action definition.
+
+    Returns:
+        Itself.
+*/
+Watchdog.prototype.specification = function(test, action) {
+    this.rules.set(test, action);
+
+    return this;
+};
+
+/*
     Start watchdog timer.
 
     Returns:

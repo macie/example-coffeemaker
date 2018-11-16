@@ -17,6 +17,15 @@ describe('Watchdog', () => {
         expect(watchdog.timeout).toEqual(time);
     });
 
+    it('should be able to add specification', () => {
+        const test = () => {true;};
+        const action = () => {};
+
+        watchdog.specification(test, action);
+
+        expect(watchdog.rules.size).toEqual(1);
+    });
+
     it('should be able to start', () => {
         watchdog.start();
 
