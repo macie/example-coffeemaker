@@ -6,11 +6,13 @@ import LowLevelAPI from './LowLevelAPI';
 
     Attributes:
         api: An interface of coffee machine low-level API.
+        isOn: A boolean indicating if warmer is on.
         overheatingCheckLoop: An ID of currently running check loop.
         signal: A dictionary with pot warmer signals.
 */
 function Warmer() {
     this.api = new LowLevelAPI();
+    this.isOn = false;
     this.overheatingCheckLoop;
     this.signal = {
         potRemoved: new Signal(),
@@ -44,7 +46,6 @@ Warmer.prototype.initialize = function() {
 */
 Warmer.prototype.turnOn = function() {
     const REFRESH_RATE = 1000;  // in ms
-    let wasOn = false;
 
     if (this.overheatingCheckLoop) {
         this.turnOff();
@@ -53,7 +54,7 @@ Warmer.prototype.turnOn = function() {
     this.overheatingCheckLoop = setInterval(() => {
         const isEmpty = this.isEmpty();
         const isOn = !this.hasEmptyPot() && !isEmpty;  // beware: order matters (short-circuit evaluation)
-        const stateChanged = (wasOn !== isOn);
+        const stateChanged = (this.isOn !== isOn);
 
         if (stateChanged) {
             this.api.SetWarmerState(isOn ? 'ON' : 'OFF');
@@ -65,7 +66,7 @@ Warmer.prototype.turnOn = function() {
             }
         }
 
-        wasOn = isOn;
+        this.isOn = isOn;
     }, REFRESH_RATE);
 
     return this;
@@ -83,6 +84,7 @@ Warmer.prototype.turnOff = function() {
     clearInterval(this.overheatingCheckLoop);
     this.overheatingCheckLoop = null;
 
+    this.isOn = false;
     this.api.SetWarmerState('OFF');
 
     return this;
