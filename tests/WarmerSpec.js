@@ -117,6 +117,16 @@ describe('Warmer', () => {
     });
 
     describe('should indicate if pot warmer', () => {
+        it('is on', () => {
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_NOT_EMPTY');
+            warmer.turnOn();
+            jest.advanceTimersByTime(1000);
+
+            let result = warmer.isOn;
+
+            expect(result).toBeTruthy();
+        });
+
         it('has filled pot', () => {
             warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_NOT_EMPTY');
 
