@@ -38,10 +38,10 @@ CoffeeMaker.prototype.powerOn = function() {
     this.boiler.initialize();
 
     this.warmer.initialize();
-    this.warmer.signal.potRemoved.receiveWith(
+    this.warmer.signal.potWasRemoved.receiveWith(
         this.boiler.turnOff
     );
-    this.warmer.signal.potReturned.receiveWith(
+    this.warmer.signal.potWasReturned.receiveWith(
         this.boiler.turnOn
     );
 

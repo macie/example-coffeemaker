@@ -92,18 +92,18 @@ describe('CoffeeMaker', () => {
             });
         });
 
-        it('potRemoved - should turn off boiler', () => {
+        it('potWasRemoved - should turn off boiler', () => {
             coffeeMaker.powerOn();
 
-            coffeeMaker.warmer.signal.potRemoved.emit();
+            coffeeMaker.warmer.signal.potWasRemoved.emit();
 
             expect(coffeeMaker.boiler.turnOff).toHaveBeenCalledTimes(1);
         });
 
-        it('potReturned - should turn on boiler', () => {
+        it('potWasReturned - should turn on boiler', () => {
             coffeeMaker.powerOn();
 
-            coffeeMaker.warmer.signal.potReturned.emit();
+            coffeeMaker.warmer.signal.potWasReturned.emit();
 
             expect(coffeeMaker.boiler.turnOn).toHaveBeenCalledTimes(1);
         });

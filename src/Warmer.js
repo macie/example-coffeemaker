@@ -15,8 +15,8 @@ function Warmer() {
     this.isOn = false;
     this.overheatingCheckLoop;
     this.signal = {
-        potRemoved: new Signal(),
-        potReturned: new Signal()
+        potWasRemoved: new Signal(),
+        potWasReturned: new Signal()
     };
 }
 
@@ -60,9 +60,9 @@ Warmer.prototype.turnOn = function() {
             this.api.SetWarmerState(isOn ? 'ON' : 'OFF');
 
             if (isEmpty) {
-                this.signal.potRemoved.emit();
+                this.signal.potWasRemoved.emit();
             } else {
-                this.signal.potReturned.emit();
+                this.signal.potWasReturned.emit();
             }
         }
 
