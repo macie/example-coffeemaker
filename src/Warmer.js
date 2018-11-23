@@ -110,4 +110,14 @@ Warmer.prototype.hasEmptyPot = function() {
     return this.api.GetWarmerPlateStatus() == 'POT_EMPTY';
 };
 
+/*
+    Indicate if pot was already removed.
+
+    Returns:
+        True if pot was already removed; false - otherwise.
+*/
+Warmer.prototype.hasPotBeenRemoved = function() {
+    return this.isOn && this.isEmpty();
+};
+
 export default Warmer;

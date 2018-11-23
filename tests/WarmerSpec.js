@@ -143,4 +143,24 @@ describe('Warmer', () => {
             expect(result).toBeTruthy();
         });
     });
+
+    describe('should indicate if pot', () => {
+        it('was already removed', () => {
+            warmer.isOn = true;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('WARMER_EMPTY');
+
+            let result = warmer.hasPotBeenRemoved();
+
+            expect(result).toBeTruthy();
+        });
+
+        it('was not already removed', () => {
+            warmer.isOn = false;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('WARMER_EMPTY');
+
+            let result = warmer.hasPotBeenRemoved();
+
+            expect(result).toBeFalsy();
+        });
+    });
 });
