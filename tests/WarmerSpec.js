@@ -189,5 +189,32 @@ describe('Warmer', () => {
 
             expect(result).toBeFalsy();
         });
+
+        it('empty pot was already returned', () => {
+            warmer.isOn = false;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_EMPTY');
+
+            let result = warmer.hasEmptyPotBeenReturned();
+
+            expect(result).toBeTruthy();
+        });
+
+        it('not empty pot was already returned', () => {
+            warmer.isOn = false;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_NOT_EMPTY');
+
+            let result = warmer.hasEmptyPotBeenReturned();
+
+            expect(result).toBeFalsy();
+        });
+
+        it('empty pot was not already returned', () => {
+            warmer.isOn = true;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_EMPTY');
+
+            let result = warmer.hasEmptyPotBeenReturned();
+
+            expect(result).toBeFalsy();
+        });
     });
 });
