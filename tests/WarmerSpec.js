@@ -144,8 +144,8 @@ describe('Warmer', () => {
         });
     });
 
-    describe('should indicate if pot', () => {
-        it('was already removed', () => {
+    describe('should indicate if', () => {
+        it('pot was already removed', () => {
             warmer.isOn = true;
             warmer.api.GetWarmerPlateStatus.mockReturnValue('WARMER_EMPTY');
 
@@ -154,11 +154,38 @@ describe('Warmer', () => {
             expect(result).toBeTruthy();
         });
 
-        it('was not already removed', () => {
+        it('pot was not already removed', () => {
             warmer.isOn = false;
             warmer.api.GetWarmerPlateStatus.mockReturnValue('WARMER_EMPTY');
 
             let result = warmer.hasPotBeenRemoved();
+
+            expect(result).toBeFalsy();
+        });
+
+        it('non-empty pot was already returned', () => {
+            warmer.isOn = false;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_NOT_EMPTY');
+
+            let result = warmer.hasPotBeenReturned();
+
+            expect(result).toBeTruthy();
+        });
+
+        it('non-empty pot was not already returned', () => {
+            warmer.isOn = false;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_EMPTY');
+
+            let result = warmer.hasPotBeenReturned();
+
+            expect(result).toBeFalsy();
+        });
+
+        it('non-empty pot was not already returned', () => {
+            warmer.isOn = true;
+            warmer.api.GetWarmerPlateStatus.mockReturnValue('POT_NOT_EMPTY');
+
+            let result = warmer.hasPotBeenReturned();
 
             expect(result).toBeFalsy();
         });

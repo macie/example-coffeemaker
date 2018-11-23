@@ -120,4 +120,14 @@ Warmer.prototype.hasPotBeenRemoved = function() {
     return this.isOn && this.isEmpty();
 };
 
+/*
+    Indicate if non-empty pot was already returned.
+
+    Returns:
+        True if non-empty pot was already returned; false - otherwise.
+*/
+Warmer.prototype.hasPotBeenReturned = function() {
+    return !this.isOn && !this.isEmpty() && !this.hasEmptyPot();
+};
+
 export default Warmer;
