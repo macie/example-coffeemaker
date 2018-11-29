@@ -2,13 +2,11 @@
     A watchdog timer.
 
     Attributes:
-        failSafeCheck: A function with fail-safe action.
         timeout: A watchdog timer interval (in ms). Default: 1 second.
         pid: A watchdog process ID.
         rules: A collection of tests and actions.
 */
 function Watchdog() {
-    this.failSafeCheck = () => {};
     this.timeout = 1000;
     this.pid;
     this.rules = new Map();
@@ -46,6 +44,23 @@ Watchdog.prototype.specification = function(test, action) {
 };
 
 /*
+    Check specifications;
+
+    Returns:
+        Itself.
+*/
+Watchdog.prototype.failSafeCheck = function() {
+    for (var [test, action] of this.rules) {
+        if (test()) {
+            action();
+            return this;
+        }
+    }
+
+    return this;
+};
+
+/*
     Start watchdog timer.
 
     Returns:
@@ -56,7 +71,7 @@ Watchdog.prototype.start = function() {
         this.stop();
     }
 
-    this.pid = setInterval(this.failSafeCheck, this.timeout);
+    this.pid = setInterval(this.failSafeCheck.bind(this), this.timeout);
 
     return this;
 };

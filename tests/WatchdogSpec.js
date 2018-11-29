@@ -26,11 +26,23 @@ describe('Watchdog', () => {
         expect(watchdog.rules.size).toEqual(1);
     });
 
+    describe('for rules', () => {
+        it('should be able to evaluate callbacks',() => {
+            const test = () => true;
+            const action = jest.fn();
+            watchdog.specification(test, action);
+
+            watchdog.failSafeCheck(test, action);
+
+            expect(action).toHaveBeenCalled();
+        });
+    });
+
     it('should be able to start', () => {
         watchdog.start();
 
         expect(setInterval).toHaveBeenCalledWith(
-            watchdog.failSafeCheck, watchdog.timeout);
+            expect.any(Function), watchdog.timeout);
     });
 
     it('should maintain only one check loop', () => {
