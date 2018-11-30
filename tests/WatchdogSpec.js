@@ -27,7 +27,7 @@ describe('Watchdog', () => {
     });
 
     describe('for rules', () => {
-        it('should be able to evaluate callbacks',() => {
+        it('should be able to evaluate callbacks', () => {
             const test = () => true;
             const action = jest.fn();
             watchdog.specification(test, action);
@@ -35,6 +35,16 @@ describe('Watchdog', () => {
             watchdog.failSafeCheck(test, action);
 
             expect(action).toHaveBeenCalled();
+        });
+
+        it('should not evaluate callbacks when test is not fulfilled', () => {
+            const test = () => false;
+            const action = jest.fn();
+            watchdog.specification(test, action);
+
+            watchdog.failSafeCheck(test, action);
+
+            expect(action).not.toHaveBeenCalled();
         });
     });
 
