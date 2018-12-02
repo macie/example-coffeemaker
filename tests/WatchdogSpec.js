@@ -32,7 +32,7 @@ describe('Watchdog', () => {
             const action = jest.fn();
             watchdog.specification(test, action);
 
-            watchdog.failSafeCheck(test, action);
+            watchdog.failSafeCheck();
 
             expect(action).toHaveBeenCalled();
         });
@@ -61,7 +61,7 @@ describe('Watchdog', () => {
             const action = jest.fn();
             watchdog.specification(test, action);
 
-            watchdog.failSafeCheck(test, action);
+            watchdog.failSafeCheck();
 
             expect(action).not.toHaveBeenCalled();
         });
