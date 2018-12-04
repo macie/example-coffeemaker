@@ -1,3 +1,4 @@
+import Watchdog from './Watchdog';
 import LowLevelAPI from './LowLevelAPI';
 
 /*
@@ -9,7 +10,7 @@ import LowLevelAPI from './LowLevelAPI';
 */
 function Boiler() {
     this.api = new LowLevelAPI();
-    this.overheatingCheckLoop;
+    this.overheatingCheckLoop = new Watchdog();
 }
 
 /*
@@ -20,6 +21,9 @@ function Boiler() {
 */
 Boiler.prototype.initialize = function() {
     this.turnOff();
+
+    this.overheatingCheckLoop
+        .specification(this.isEmpty, this.turnOff);
 
     return this;
 };
@@ -35,20 +39,10 @@ Boiler.prototype.initialize = function() {
         Itself.
 */
 Boiler.prototype.turnOn = function() {
-    const REFRESH_RATE = 1000;  // in ms
-
-    if (this.overheatingCheckLoop) {
-        this.turnOff();
-    }
-
     this.api.SetBoilerState('ON');
     this.api.SetReliefValveState('CLOSED');
 
-    this.overheatingCheckLoop = setInterval(() => {
-        if (this.isEmpty()) {
-            this.turnOff();
-        }
-    }, REFRESH_RATE);
+    this.overheatingCheckLoop.start();
 
     return this;
 };
@@ -63,8 +57,7 @@ Boiler.prototype.turnOn = function() {
         Itself.
 */
 Boiler.prototype.turnOff = function() {
-    clearInterval(this.overheatingCheckLoop);
-    this.overheatingCheckLoop = null;
+    this.overheatingCheckLoop.stop();
 
     this.api.SetBoilerState('OFF');
     this.api.SetReliefValveState('OPEN');

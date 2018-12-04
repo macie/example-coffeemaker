@@ -1,3 +1,4 @@
+jest.mock('../src/Watchdog.js');
 jest.mock('../src/LowLevelAPI.js');
 import Boiler from '../src/Boiler';
 
@@ -26,29 +27,13 @@ describe('Boiler', () => {
     });
 
     it('should protect itself against overheating', () => {
-        boiler.turnOff = jest.fn(boiler.turnOff);
-        boiler.isEmpty = jest.fn()
-            .mockReturnValueOnce(false)
-            .mockReturnValueOnce(false)
-            .mockReturnValueOnce(true)
-            .mockReturnValue(false);
+        boiler.turnOff = jest.fn();
+        boiler.isEmpty = jest.fn();
 
-        boiler.turnOn();
-        jest.advanceTimersByTime(10000);
+        boiler.initialize();
 
-        expect(boiler.isEmpty).toHaveBeenCalledTimes(3);
-        expect(boiler.turnOff).toHaveBeenCalledTimes(1);
-    });
-
-    it('should maintain only one overheating check', () => {
-        boiler.turnOff = jest.fn(boiler.turnOff);
-        boiler.isEmpty = jest.fn().mockReturnValue(false);
-        boiler.turnOn();
-
-        boiler.turnOn();
-        jest.advanceTimersByTime(10000);
-
-        expect(boiler.turnOff).toHaveBeenCalledTimes(1);
+        expect(boiler.overheatingCheckLoop.specification)
+            .toHaveBeenCalledWith(boiler.isEmpty, boiler.turnOff);
     });
 
     it('should be able to turn off', () => {
