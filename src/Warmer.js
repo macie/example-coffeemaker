@@ -1,4 +1,5 @@
 import Signal from './Signal';
+import Watchdog from './Watchdog';
 import LowLevelAPI from './LowLevelAPI';
 
 /*
@@ -7,13 +8,13 @@ import LowLevelAPI from './LowLevelAPI';
     Attributes:
         api: An interface of coffee machine low-level API.
         isOn: A boolean indicating if warmer is on.
-        overheatingCheckLoop: An ID of currently running check loop.
+        overheatingCheckLoop: A watchdog object.
         signal: A dictionary with pot warmer signals.
 */
 function Warmer() {
     this.api = new LowLevelAPI();
     this.isOn = false;
-    this.overheatingCheckLoop;
+    this.overheatingCheckLoop = new Watchdog();
     this.signal = {
         potWasRemoved: new Signal(),
         potWasReturned: new Signal()
@@ -23,6 +24,9 @@ function Warmer() {
 /*
     Reset pot warmer model.
     
+    Warmer in operational mode should have turned on heater when has non-empty
+    pot.
+
     Returns:
         Itself.
 */
@@ -32,42 +36,34 @@ Warmer.prototype.initialize = function() {
         this.signal[name].drop();
     }
 
+    this.overheatingCheckLoop
+        .specification(this.hasPotBeenRemoved, () => {
+            this.api.SetWarmerState('OFF');
+            this.isOn = false;
+            this.signal.potWasRemoved.emit();
+        })
+        .specification(this.hasPotBeenReturned, () => {
+            this.api.SetWarmerState('ON');
+            this.isOn = true;
+            this.signal.potWasReturned.emit();
+        })
+        .specification(this.hasEmptyPotBeenReturned,
+            this.signal.potWasReturned.emit);
+
     return this;
 };
 
 /*
     Turn on pot warmer.
 
-    Warmer in operational mode should have turned on heater when has non-empty
-    pot.
-
     Returns:
         Itself.
 */
 Warmer.prototype.turnOn = function() {
-    const REFRESH_RATE = 1000;  // in ms
+    this.isOn = true;
+    this.api.SetWarmerState('ON');
 
-    if (this.overheatingCheckLoop) {
-        this.turnOff();
-    }
-
-    this.overheatingCheckLoop = setInterval(() => {
-        const isEmpty = this.isEmpty();
-        const isOn = !this.hasEmptyPot() && !isEmpty;  // beware: order matters (short-circuit evaluation)
-        const stateChanged = (this.isOn !== isOn);
-
-        if (stateChanged) {
-            this.api.SetWarmerState(isOn ? 'ON' : 'OFF');
-
-            if (isEmpty) {
-                this.signal.potWasRemoved.emit();
-            } else {
-                this.signal.potWasReturned.emit();
-            }
-        }
-
-        this.isOn = isOn;
-    }, REFRESH_RATE);
+    this.overheatingCheckLoop.start();
 
     return this;
 };
@@ -81,8 +77,7 @@ Warmer.prototype.turnOn = function() {
         Itself.
 */
 Warmer.prototype.turnOff = function() {
-    clearInterval(this.overheatingCheckLoop);
-    this.overheatingCheckLoop = null;
+    this.overheatingCheckLoop.stop();
 
     this.isOn = false;
     this.api.SetWarmerState('OFF');

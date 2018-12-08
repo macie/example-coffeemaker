@@ -1,4 +1,5 @@
 jest.mock('../src/Signal.js');
+jest.mock('../src/Watchdog.js');
 jest.mock('../src/LowLevelAPI.js');
 import Warmer from '../src/Warmer';
 
@@ -9,6 +10,8 @@ describe('Warmer', () => {
 
     beforeEach(() => {
         warmer = new Warmer();
+        warmer.overheatingCheckLoop.specification
+            .mockReturnValue(warmer.overheatingCheckLoop);
     });
 
     it('should be able to reset itself', () => {
@@ -31,65 +34,25 @@ describe('Warmer', () => {
         expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('ON');
     });
 
-    it('should protect itself against overheating ', () => {
-        warmer.isEmpty = jest.fn()
-            .mockReturnValueOnce(false)
-            .mockReturnValueOnce(true)
-            .mockReturnValueOnce(false)
-            .mockReturnValue(true);
-
-        warmer.hasEmptyPot = jest.fn()
-            .mockReturnValueOnce(false)
-            .mockReturnValueOnce(false)
-            .mockReturnValueOnce(true)
-            .mockReturnValue(true);
-
-        warmer.turnOn();
-        jest.advanceTimersByTime(10000);
-
-        expect(warmer.api.SetWarmerState).toHaveBeenCalledWith('OFF');
-    });
-
-    it('should maintain only one overheating check', () => {
-        warmer.turnOff = jest.fn(warmer.turnOff);
-        warmer.isEmpty = jest.fn().mockReturnValue(false);
-        warmer.hasEmptyPot = jest.fn().mockReturnValue(false);
-        warmer.turnOn();
-
-        warmer.turnOn();
-        jest.advanceTimersByTime(10000);
-
-        expect(warmer.turnOff).toHaveBeenCalledTimes(1);
-    });
-
     it('should be able to inform about removed pot', () => {
-        warmer.isEmpty = jest.fn()
-            .mockReturnValueOnce(false)
-            .mockReturnValue(true);
-        warmer.hasEmptyPot = jest.fn()
-            .mockReturnValue(false);
+        warmer.hasPotBeenRemoved = jest.fn();
+        warmer.signal.potWasReturned.emit = jest.fn();
 
-        warmer.turnOn();
-        jest.advanceTimersByTime(5000);
+        warmer.initialize();
 
-        expect(warmer.signal.potWasRemoved.emit).toHaveBeenCalledTimes(1);
-        expect(warmer.isEmpty).toHaveBeenCalledTimes(5);
+        expect(warmer.overheatingCheckLoop.specification)
+            .toHaveBeenCalledWith(warmer.hasPotBeenRemoved, expect.anything());
     });
 
     it('should be able to inform about returned pot', () => {
-        warmer.isEmpty = jest.fn()
-            .mockReturnValueOnce(true)
-            .mockReturnValue(false);
-        warmer.hasEmptyPot = jest.fn()
-            .mockReturnValueOnce(false)
-            .mockReturnValueOnce(true)
-            .mockReturnValue(false);
+        warmer.hasEmptyPotBeenReturned = jest.fn();
+        warmer.signal.potWasReturned.emit = jest.fn();
 
-        warmer.turnOn();
-        jest.advanceTimersByTime(5000);
+        warmer.initialize();
 
-        expect(warmer.signal.potWasReturned.emit).toHaveBeenCalledTimes(1);
-        expect(warmer.isEmpty).toHaveBeenCalledTimes(5);
+        expect(warmer.overheatingCheckLoop.specification)
+            .toHaveBeenCalledWith(warmer.hasEmptyPotBeenReturned,
+                warmer.signal.potWasReturned.emit);
     });
 
     it('should be able to turn off', () => {
