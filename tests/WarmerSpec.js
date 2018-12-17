@@ -44,7 +44,7 @@ describe('Warmer', () => {
             .toHaveBeenCalledWith(warmer.hasPotBeenRemoved, expect.anything());
     });
 
-    it('should be able to inform about returned pot', () => {
+    it('should be able to inform about returned empty pot', () => {
         warmer.hasEmptyPotBeenReturned = jest.fn();
         warmer.signal.potWasReturned.emit = jest.fn();
 
@@ -53,6 +53,16 @@ describe('Warmer', () => {
         expect(warmer.overheatingCheckLoop.specification)
             .toHaveBeenCalledWith(warmer.hasEmptyPotBeenReturned,
                 warmer.signal.potWasReturned.emit);
+    });
+
+    it('should be able to inform about returned pot', () => {
+        warmer.hasPotBeenReturned = jest.fn();
+
+        warmer.initialize();
+
+        expect(warmer.overheatingCheckLoop.specification)
+            .toHaveBeenCalledWith(warmer.hasPotBeenReturned,
+                expect.anything());
     });
 
     it('should be able to turn off', () => {
