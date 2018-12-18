@@ -79,8 +79,8 @@ Warmer.prototype.turnOn = function() {
 Warmer.prototype.turnOff = function() {
     this.overheatingCheckLoop.stop();
 
-    this.isOn = false;
     this.api.SetWarmerState('OFF');
+    this.isOn = false;
 
     return this;
 };
