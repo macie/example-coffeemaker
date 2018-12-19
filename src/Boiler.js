@@ -6,7 +6,7 @@ import LowLevelAPI from './LowLevelAPI';
 
     Attributes:
         api: An interface of coffee machine low-level API.
-        overheatingCheckLoop: An ID of currently running check loop.
+        overheatingCheckLoop: A watchdog object.
 */
 function Boiler() {
     this.api = new LowLevelAPI();
@@ -15,6 +15,9 @@ function Boiler() {
 
 /*
     Reset water boiler model.
+
+    Overheating protection should:
+     - turn off the boiler - when it's empty.
     
     Returns:
         Itself.
