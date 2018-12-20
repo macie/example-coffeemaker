@@ -24,8 +24,10 @@ function Warmer() {
 /*
     Reset pot warmer model.
     
-    Warmer in operational mode should have turned on heater when has non-empty
-    pot.
+    Overheating protection should:
+     - turn off the heater and emit signal - when pot has been removed,
+     - turn on the heater and emit signal - when non-empty pot has been returned,
+     - emit signal - when empty pot has been returned.
 
     Returns:
         Itself.
@@ -55,6 +57,8 @@ Warmer.prototype.initialize = function() {
 
 /*
     Turn on pot warmer.
+
+    Warmer in operational mode should have turned on heater.
 
     Returns:
         Itself.
