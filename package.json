@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "An example of object-oriented architecture of coffee maker machine.",
   "main": "CoffeeMaker.js",
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.1.x",
     "@babel/preset-env": "7.1.x",
@@ -12,6 +11,7 @@
     "babel-jest": "23.6.x",
     "eslint": "5.6.x",
     "jest": "23.6.x",
+    "npm-check-updates": "^16.0.6",
     "regenerator-runtime": "0.12.x"
   },
   "scripts": {
