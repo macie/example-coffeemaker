@@ -4,15 +4,15 @@
   "description": "An example of object-oriented architecture of coffee maker machine.",
   "main": "CoffeeMaker.js",
   "devDependencies": {
-    "@babel/core": "7.1.x",
-    "@babel/preset-env": "7.1.x",
+    "@babel/core": "7.18.x",
+    "@babel/preset-env": "7.18.x",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "10.0.x",
-    "babel-jest": "23.6.x",
-    "eslint": "5.6.x",
-    "jest": "23.6.x",
+    "babel-jest": "29.0.x",
+    "eslint": "8.23.x",
+    "jest": "29.0.x",
     "npm-check-updates": "^16.0.6",
-    "regenerator-runtime": "0.12.x"
+    "regenerator-runtime": "0.13.x"
   },
   "scripts": {
     "test": "./node_modules/jest/bin/jest.js --config=tests/config/jest.json --coverage",
