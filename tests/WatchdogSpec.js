@@ -1,6 +1,8 @@
 import Watchdog from '../src/Watchdog';
 
 jest.useFakeTimers();
+jest.spyOn(global, 'setInterval');
+jest.spyOn(global, 'clearInterval');
 
 describe('Watchdog', () => {
     let watchdog;
