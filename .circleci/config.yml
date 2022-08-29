@@ -1,0 +1,32 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.7
+
+jobs:
+  build:
+    environment:
+      CC_TEST_REPORTER_ID: ff1f3b93d85a8d4c5eeac69794d78a9579373e21abb099a91710497dee1ce351
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            # download test reporter as a static binary
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: Run tests
+          command: |
+            ./cc-test-reporter before-build
+            npm test
+            ./cc-test-reporter after-build --exit-code $?
+
+workflows:
+  build_and_test:
+    jobs:
+      - build
+

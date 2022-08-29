@@ -1,6 +1,6 @@
 # example-coffeemaker
 
-[![Build Status](https://travis-ci.org/macie/example-coffeemaker.svg?branch=master)](https://travis-ci.org/macie/example-coffeemaker)
+[![Build Status](https://dl.circleci.com/status-badge/img/gh/macie/example-coffeemaker/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/macie/example-coffeemaker/tree/master)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/9f958e40b1cfd4eb94ec/test_coverage)](https://codeclimate.com/github/macie/example-coffeemaker/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9f958e40b1cfd4eb94ec/maintainability)](https://codeclimate.com/github/macie/example-coffeemaker/maintainability)
 
