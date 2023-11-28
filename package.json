@@ -11,7 +11,7 @@
     "babel-eslint": "10.0.x",
     "babel-jest": "23.6.x",
     "eslint": "5.6.x",
-    "jest": "23.6.x",
+    "jest": "29.7.x",
     "regenerator-runtime": "0.12.x"
   },
   "scripts": {
